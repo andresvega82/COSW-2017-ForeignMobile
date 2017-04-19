@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="Bienvenidos a Foreign"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="50dp"
+            android:id="@+id/textView2"
+            android:fontFamily="cursive" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:text="Junto a nosotros encontraras la forma mas divertida para aprender cualquier idioma"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:fontFamily="cursive"
+            android:textSize="20dp"
+            android:id="@+id/textView5" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:text="Iniciar sesion:"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="cursive"
+            android:textSize="30dp"
+            android:id="@+id/textView3" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="90px" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="Nombre Usuario"
+            android:ems="10"
+            android:fontFamily="cursive"
+            android:textSize="25dp"
+            android:id="@+id/editText8" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Contraseña"
+            android:ems="10"
+            android:textSize="25dp"
+            android:fontFamily="cursive"
+            android:id="@+id/editText9" />
+
+        <Button
+            android:text="Ingresar"
+            android:layout_width="400px"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="cursive"
+            android:textSize="15dp"
+            android:onClick="login"
+            android:id="@+id/button3" />
+
+        <TextView
+            android:text="Registrarme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd"
+            android:onClick="signUp"
+            android:textSize="25dp"
+            android:fontFamily="cursive"
+            android:id="@+id/textView4" />
+    </LinearLayout>
+
+</LinearLayout>

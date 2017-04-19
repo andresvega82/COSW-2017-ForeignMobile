@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:text="Registro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            android:textAlignment="center"
+            android:fontFamily="cursive"
+            android:textSize="50dp"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Nombre"
+            android:fontFamily="cursive"
+            android:textSize="25dp"
+            android:ems="10"
+            android:id="@+id/editText" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Apellido"
+            android:fontFamily="cursive"
+            android:textSize="25dp"
+
+            android:ems="10"
+            android:id="@+id/editText2" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="Email"
+            android:fontFamily="cursive"
+            android:textSize="25dp"
+
+            android:ems="10"
+            android:id="@+id/editText3" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:hint="Numero de Telefono"
+            android:ems="10"
+            android:fontFamily="cursive"
+            android:textSize="25dp"
+
+            android:id="@+id/editText4" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Pais"
+            android:ems="10"
+            android:fontFamily="cursive"
+            android:textSize="25dp"
+
+            android:id="@+id/editText5" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Contraseña"
+            android:ems="10"
+            android:fontFamily="cursive"
+            android:textSize="25dp"
+
+            android:id="@+id/editText6" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Confirmar Contraseña"
+            android:ems="10"
+            android:fontFamily="cursive"
+            android:textSize="25dp"
+
+            android:id="@+id/editText7" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <Button
+            android:text="Registrarme"
+            android:layout_width="400px"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="cursive"
+            android:textSize="15dp"
+
+            android:id="@+id/button" />
+
+    </LinearLayout>
+
+</LinearLayout>
