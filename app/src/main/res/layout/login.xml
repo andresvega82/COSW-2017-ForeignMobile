@@ -3,12 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorPrimaryDark"
+    tools:backgroundTint="@color/colorAccent">
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="334dp"
+        android:layout_height="match_parent"
+        android:backgroundTint="@color/colorAccent">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
 
         <TextView
             android:text="Bienvenidos a Foreign"
@@ -16,8 +27,10 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textSize="50dp"
+            android:textColor="@color/colorPrimaryDark"
             android:id="@+id/textView2"
             android:fontFamily="cursive" />
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="30dp" />
@@ -28,6 +41,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:fontFamily="cursive"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="20dp"
             android:id="@+id/textView5" />
 
@@ -41,6 +55,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="cursive"
             android:textSize="30dp"
+            android:textColor="@color/colorPrimaryDark"
             android:id="@+id/textView3" />
 
         <Space
@@ -53,6 +68,7 @@
             android:inputType="textEmailAddress"
             android:hint="Nombre Usuario"
             android:ems="10"
+            android:textColorHint="@color/colorPrimaryDark"
             android:fontFamily="cursive"
             android:textSize="25dp"
             android:id="@+id/editText8" />
@@ -62,6 +78,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:hint="Contraseña"
+            android:textColorHint="@color/colorPrimaryDark"
             android:ems="10"
             android:textSize="25dp"
             android:fontFamily="cursive"
@@ -69,12 +86,14 @@
 
         <Button
             android:text="Ingresar"
-            android:layout_width="400px"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:fontFamily="cursive"
-            android:textSize="15dp"
+            android:textSize="25dp"
             android:onClick="login"
+            android:textColor="@color/colorAccent"
+            android:background="@color/colorPrimaryDark"
             android:id="@+id/button3" />
 
         <TextView
@@ -82,10 +101,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="textEnd"
+            android:textColor="@color/colorPrimaryDark"
             android:onClick="signUp"
             android:textSize="25dp"
             android:fontFamily="cursive"
             android:id="@+id/textView4" />
     </LinearLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
 
 </LinearLayout>
