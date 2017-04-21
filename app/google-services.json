@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "760586341892",
+    "firebase_url": "https://cosw-foreign.firebaseio.com",
+    "project_id": "cosw-foreign",
+    "storage_bucket": "cosw-foreign.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760586341892:android:83d69a2f01bcb177",
+        "android_client_info": {
+          "package_name": "edu.eci.com.foreignmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "760586341892-f41e9l21i7kmbm7l4bkpcphc6du886ek.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.eci.com.foreignmobile",
+            "certificate_hash": "2ff1d23da12d1345d08747fce98370aeb5c0dbac"
+          }
+        },
+        {
+          "client_id": "760586341892-tin76a07jgktrqbarhglg7gv7ja7nlsb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfY0q9gykJCUot1Me0aunBI2g9VPb2cG8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "760586341892-tin76a07jgktrqbarhglg7gv7ja7nlsb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
