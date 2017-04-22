@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    tools:backgroundTint="@color/colorAccent">
+    android:backgroundTint="@color/colorAccent">
 
     <Space
         android:layout_width="wrap_content"
@@ -58,9 +58,18 @@
             android:textColor="@color/colorPrimaryDark"
             android:id="@+id/textView3" />
 
+        <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="gone"
+            android:indeterminateTint="@color/colorPrimaryDark"
+            android:id="@+id/progressBar2" />
+
         <Space
             android:layout_width="match_parent"
-            android:layout_height="90px" />
+            android:layout_height="40px" />
 
         <EditText
             android:layout_width="match_parent"

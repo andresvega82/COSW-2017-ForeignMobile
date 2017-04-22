@@ -1,7 +1,9 @@
-package edu.eci.com.foreignmobile;
+package edu.eci.com.foreignmobile.ui.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import edu.eci.com.foreignmobile.R;
 
 public class NewTutorialActivity extends AppCompatActivity {
 

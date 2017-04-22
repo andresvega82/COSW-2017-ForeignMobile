@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark">
 
         <Space
             android:layout_width="30dp"
@@ -123,36 +124,65 @@
                 android:layout_height="65dp"
                 android:weightSum="1">
 
-                <RadioButton
-                    android:text="Estudiante"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccent"
-                    android:fontFamily="cursive"
-                    android:id="@+id/radioButton3"
-                    android:textSize="25dp"
-                    android:layout_weight="3.77" />
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3.77"
+                    android:id="@+id/radioGroup">
 
-                <RadioButton
-                    android:text="Profesor"
-                    android:layout_width="162dp"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccent"
-                    android:fontFamily="cursive"
-                    android:textSize="25dp"
-                    android:id="@+id/radioButton2" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+
+                        <RadioButton
+                            android:text="Profesor"
+                            android:layout_width="162dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorAccent"
+                            android:fontFamily="cursive"
+                            android:textSize="25dp"
+                            android:id="@+id/radioButton2"
+                            android:onClick="radioButtonProfesor"
+                            android:layout_weight="1" />
+
+                        <RadioButton
+                            android:text="Estudiante"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorAccent"
+                            android:fontFamily="cursive"
+                            android:id="@+id/radioButton3"
+                            android:textSize="25dp"
+                            android:onClick="radioButtonEstudiante"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+
+                </RadioGroup>
 
             </LinearLayout>
 
+            <ProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="gone"
+                android:indeterminateTint="@color/colorAccent"
+                android:id="@+id/progressBar3" />
+
             <Button
-                android:text="Registrarme"
+                android:text="Continuar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:fontFamily="cursive"
                 android:textSize="25dp"
-                android:textColor="@color/colorAccent"
-
+                android:textColor="@color/colorPrimaryDark"
+                android:background="@color/colorAccent"
+                android:onClick="continuarSingUp"
                 android:id="@+id/button" />
 
         </LinearLayout>

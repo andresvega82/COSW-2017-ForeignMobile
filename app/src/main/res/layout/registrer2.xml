@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark">
+
+        <Space
+            android:layout_width="30dp"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="Registro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView"
+                android:textAlignment="center"
+                android:fontFamily="cursive"
+                android:textColor="@color/colorAccent"
+                android:textSize="50dp"/>
+
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
+            <TextView
+                android:text="Datos Tarjeta de Credito"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="cursive"
+                android:textColor="@color/colorAccent"
+                android:textSize="30dp"
+                android:id="@+id/textView6" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="Numero de Tarjeta"
+                android:textColorHint="@color/colorAccent"
+                android:fontFamily="cursive"
+                android:textSize="25dp"
+                android:ems="10"
+                android:id="@+id/editText10" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColorHint="@color/colorAccent"
+                android:fontFamily="cursive"
+                android:textSize="25dp"
+                android:hint="Codigo Postal"
+                android:ems="10"
+                android:id="@+id/editText12" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:textColorHint="@color/colorAccent"
+                android:fontFamily="cursive"
+                android:textSize="25dp"
+                android:hint="CVV"
+                android:id="@+id/editText13" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:weightSum="1">
+
+            </LinearLayout>
+
+            <ProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="gone"
+                android:indeterminateTint="@color/colorAccent"
+                android:id="@+id/progressBar3" />
+
+            <Button
+                android:text="Registrarme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="cursive"
+                android:textSize="25dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:background="@color/colorAccent"
+                android:onClick="singUp"
+                android:id="@+id/button" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="30dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>
