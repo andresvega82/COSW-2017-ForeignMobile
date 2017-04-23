@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Foreign Mobile</string>
+    <string name="title_new_tutorial">Nueva Tutoria</string>
+    <string name="title_historial">Historial</string>
+    <string name="title_myTutorial">Mis Tutorias</string>
+    <string name="title_perfil">Perfil</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
 </resources>

@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity implements FirebaseAuth.Aut
         super.onCreate(savedInstanceState);
         //getActionBar().hide();
         getSupportActionBar().hide();
-        setContentView(R.layout.login);
+        setContentView(R.layout.activity_login);
     }
 
 

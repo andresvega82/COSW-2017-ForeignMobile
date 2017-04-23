@@ -36,7 +36,7 @@ public class RegistrerActivity extends AppCompatActivity implements FirebaseAuth
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-        setContentView(R.layout.registrer);
+        setContentView(R.layout.activity_registrer);
     }
 
     @Override

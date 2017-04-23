@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <item
+        android:id="@+id/navigation_newTutorial"
+        android:icon="@mipmap/gorrote"
+        android:title="@string/title_new_tutorial" />
+
+    <item
+        android:id="@+id/navigation_historial"
+        android:icon="@mipmap/libro"
+        android:title="@string/title_historial" />
+
+    <item
+        android:id="@+id/navigation_myTutorial"
+        android:icon="@mipmap/calendario"
+        android:title="@string/title_myTutorial" />
+
+
+</menu>
