@@ -20,65 +20,9 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="70dp"/>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="509dp">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark">
-
-            <ImageView
-                android:src="@mipmap/perfil"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView" />
-
-            <TextView
-                android:id="@+id/nombre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nombre"
-                android:textColor="@color/colorAccent"
-                android:textSize="50dp" />
-
-        </LinearLayout>
-
-        <TextView
-            android:text="Vive en"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/vive"
-            android:textColor="@color/colorAccent"
-            android:textSize="50dp"/>
-
-        <TextView
-            android:text="Edad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/edad"
-            android:textColor="@color/colorAccent"
-            android:textSize="50dp"/>
-
-        <TextView
-            android:text="Lengua materna"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/idioma"
-            android:textColor="@color/colorAccent"
-            android:textSize="50dp"/>
-
-    </LinearLayout>
-
     <include layout="@layout/content_new_tutorial" />
+
+
 
     <!--<android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
