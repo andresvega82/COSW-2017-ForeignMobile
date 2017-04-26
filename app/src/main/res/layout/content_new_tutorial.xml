@@ -65,12 +65,13 @@
     </FrameLayout>
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/buscarTutor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="cursive"
         android:textColor="@color/colorPrimary"
-        android:text="Buscar tutorias" />
+        android:text="Buscar tutorias"
+        android:onClick="searchTutorial"/>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

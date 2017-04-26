@@ -10,11 +10,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.BottomNavigationView;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,9 +29,10 @@ public class NewTutorialActivity extends AppCompatActivity
 
     Spinner listLanguages;
     String[] languages = {"¿Qué idioma quieres practicar?","English", "Español", "Portugues", "Deutsch"};
+    String[] tutorias = { "tutor 1", "tutor 2", "tutor 3", "tutor 4"};
     CalendarView calendarView;
     TextView dateDisplay;
-
+    View rootView;
 
 
     @Override
@@ -56,6 +60,7 @@ public class NewTutorialActivity extends AppCompatActivity
         ///
         selectLanguage();
         selectDate();
+        //selectTutorial();
     }
 
     private void selectDate() {
@@ -72,6 +77,24 @@ public class NewTutorialActivity extends AppCompatActivity
                 Toast.makeText(getApplicationContext(), "Día seleccionado:\n" + "Día = " + i2 + "\n" + "Mes = " + i1 + "\n" + "Año = " + i, Toast.LENGTH_LONG).show();
             }
         });
+
+    }
+
+
+    public void searchTutorial(View view){
+
+        findViewById(R.id.content_new_tutorial).setVisibility(View.INVISIBLE);
+        findViewById(R.id.content_new_tutorial2).setVisibility(View.VISIBLE);
+        selectTutorial();
+    }
+
+    private void selectTutorial() {
+
+        ListView listView = (ListView) findViewById(R.id.listTutorials);
+        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,tutorias);
+
+
+        listView.setAdapter(adapter);
 
     }
 

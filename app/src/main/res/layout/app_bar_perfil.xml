@@ -20,7 +20,12 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_new_tutorial" />
+    <include layout="@layout/content_new_tutorial"
+        android:id="@+id/content_new_tutorial"
+        android:visibility="visible"/>
+    <include layout="@layout/content_new_tutorial2"
+        android:id="@+id/content_new_tutorial2"
+        android:visibility="invisible"/>
     <!--
         <Space
             android:layout_width="30dp"
