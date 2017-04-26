@@ -1,5 +1,6 @@
 package edu.eci.com.foreignmobile.ui.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -27,7 +28,7 @@ import edu.eci.com.foreignmobile.entities.Tutor;
 
 public class NewTutorialActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    String userId="";
     Spinner listLanguages;
     String[] languages = {"¿Qué idioma quieres practicar?","English", "Español", "Portugues", "Deutsch"};
     String[] tutorias = { "tutor 1", "tutor 2", "tutor 3", "tutor 4"};
@@ -40,6 +41,8 @@ public class NewTutorialActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_tutorial);
+        Intent intent = getIntent();
+        userId = intent.getStringExtra("userId");
 
         ///
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -206,5 +209,11 @@ public class NewTutorialActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return false;
+    }
+
+    public void viewProfile(MenuItem item) {
+        Intent intent = new Intent(this,ProfileActivity.class);
+        intent.putExtra("userID",userId);
+        startActivity(intent);
     }
 }

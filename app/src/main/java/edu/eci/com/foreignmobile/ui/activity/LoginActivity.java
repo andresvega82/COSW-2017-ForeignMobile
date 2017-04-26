@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity implements FirebaseAuth.Aut
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        viewTutorial();
+                        viewTutorial(task.getResult().getUser().getUid());
                     }
                 }
             });
@@ -61,13 +61,13 @@ public class LoginActivity extends AppCompatActivity implements FirebaseAuth.Aut
 
     @Override
     public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-
     }
 
-    public void viewTutorial(){
+    public void viewTutorial(String userId){
         ProgressBar pr = (ProgressBar) findViewById(R.id.progressBar2);
         pr.setVisibility(View.GONE);
         Intent next = new Intent(this,NewTutorialActivity.class);
+        next.putExtra("userId",userId);
         startActivity(next);
     }
 }
