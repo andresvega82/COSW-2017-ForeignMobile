@@ -5,29 +5,29 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimaryDark">
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal">
 
         <Space
             android:layout_width="30dp"
             android:layout_height="wrap_content" />
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <TextView
-                android:text="Registro"
+                android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView"
-                android:textAlignment="center"
                 android:fontFamily="cursive"
+                android:text="Registro"
+                android:textAlignment="center"
                 android:textColor="@color/colorAccent"
-                android:textSize="50dp"/>
+                android:textSize="50dp" />
 
 
             <Space
@@ -35,79 +35,79 @@
                 android:layout_height="40dp" />
 
             <TextView
-                android:text="Datos Tarjeta de Credito"
+                android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="cursive"
+                android:text="Datos Tarjeta de Credito"
                 android:textColor="@color/colorAccent"
-                android:textSize="30dp"
-                android:id="@+id/textView6" />
+                android:textSize="30dp" />
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="30dp" />
 
             <EditText
+                android:id="@+id/editText10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
+                android:ems="10"
+                android:fontFamily="cursive"
                 android:hint="Numero de Tarjeta"
-                android:textColorHint="@color/colorAccent"
-                android:fontFamily="cursive"
-                android:textSize="25dp"
-                android:ems="10"
-                android:id="@+id/editText10" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:inputType="number"
                 android:textColorHint="@color/colorAccent"
+                android:textSize="25dp" />
+
+            <EditText
+                android:id="@+id/editText12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
                 android:fontFamily="cursive"
-                android:textSize="25dp"
                 android:hint="Codigo Postal"
-                android:ems="10"
-                android:id="@+id/editText12" />
+                android:inputType="number"
+                android:textColorHint="@color/colorAccent"
+                android:textSize="25dp" />
 
             <EditText
+                android:id="@+id/editText13"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
                 android:ems="10"
-                android:textColorHint="@color/colorAccent"
                 android:fontFamily="cursive"
-                android:textSize="25dp"
                 android:hint="CVV"
-                android:id="@+id/editText13" />
+                android:inputType="number"
+                android:textColorHint="@color/colorAccent"
+                android:textSize="25dp" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
+                android:orientation="horizontal"
                 android:weightSum="1">
 
             </LinearLayout>
 
             <ProgressBar
+                android:id="@+id/progressBar3"
                 style="?android:attr/progressBarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:indeterminate="true"
-                android:visibility="gone"
                 android:indeterminateTint="@color/colorAccent"
-                android:id="@+id/progressBar3" />
+                android:visibility="gone" />
 
             <Button
-                android:text="Registrarme"
+                android:id="@+id/button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:fontFamily="cursive"
-                android:textSize="25dp"
-                android:textColor="@color/colorPrimaryDark"
                 android:background="@color/colorAccent"
+                android:fontFamily="cursive"
                 android:onClick="singUp"
-                android:id="@+id/button" />
+                android:text="Registrarme"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="25dp" />
 
         </LinearLayout>
 

@@ -107,7 +107,7 @@ public class Registrer2Activity extends AppCompatActivity implements FirebaseAut
             String [] parametros = params[0].split(",");
             System.out.println(Arrays.toString(parametros));
             //Url to Post
-            String url = "http://10.2.67.72:8080/app/addUser";
+            String url = "http://10.2.67.68:8080/app/addUser";
 
             HttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(url);
