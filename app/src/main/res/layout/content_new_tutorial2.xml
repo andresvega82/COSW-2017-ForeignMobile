@@ -30,6 +30,14 @@
                 android:textColor="@color/colorAccent"
                 android:layout_margin="10px"
                 android:textSize="15pt"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="cursive"
+                android:text="Seleccione un tutor"
+                android:textColor="@color/colorPrimary"
+                android:layout_margin="10px"
+                android:textSize="10pt"/>
 
             <ListView
                 android:id="@+id/listTutorials"

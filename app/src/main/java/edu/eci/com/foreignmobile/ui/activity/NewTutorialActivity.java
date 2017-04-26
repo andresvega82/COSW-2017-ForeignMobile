@@ -1,19 +1,16 @@
 package edu.eci.com.foreignmobile.ui.activity;
 
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.BottomNavigationView;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
@@ -22,7 +19,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import edu.eci.com.foreignmobile.R;
+import edu.eci.com.foreignmobile.entities.AdapterItem;
+import edu.eci.com.foreignmobile.entities.Tutor;
 
 public class NewTutorialActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -32,7 +33,7 @@ public class NewTutorialActivity extends AppCompatActivity
     String[] tutorias = { "tutor 1", "tutor 2", "tutor 3", "tutor 4"};
     CalendarView calendarView;
     TextView dateDisplay;
-    View rootView;
+    ArrayList<Tutor> tutorArrayList = new ArrayList<Tutor>();
 
 
     @Override
@@ -61,6 +62,7 @@ public class NewTutorialActivity extends AppCompatActivity
         selectLanguage();
         selectDate();
         //selectTutorial();
+
     }
 
     private void selectDate() {
@@ -90,11 +92,51 @@ public class NewTutorialActivity extends AppCompatActivity
 
     private void selectTutorial() {
 
-        ListView listView = (ListView) findViewById(R.id.listTutorials);
-        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,tutorias);
+        //ListView listView = (ListView) findViewById(R.id.listTutorials);
+        //ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,tutorias);
+        //listView.setAdapter(adapter);
 
 
-        listView.setAdapter(adapter);
+
+        ListView lv = (ListView) findViewById(R.id.listTutorials);
+
+        Drawable photo = getResources().getDrawable( R.drawable.profesor1);
+        tutorArrayList.add(new Tutor("English", "Seth Rowan", "Want to learn fast & have fun? I teach English/ French using music/film/ poetry/jornalism! Contact me to speed up your learning!.", photo));
+        photo = getResources().getDrawable( R.drawable.profesor2);
+        tutorArrayList.add(new Tutor("English", "Stephanie Hourly", "Lorem ipsum dolor sit amet consectetur et sed adipiscing elit. Curabitur vel sem sit dolor neque semper magna lorem ipsum.", photo));
+        photo = getResources().getDrawable( R.drawable.profesor3);
+        tutorArrayList.add(new Tutor("English", "John Stephen Thomas", "Want to learn fast & have fun? I teach English/ French using music/film/ poetry/jornalism! Contact me to speed up your learning!.", photo));
+
+        AdapterItem adapter = new AdapterItem(this, tutorArrayList);
+        lv.setAdapter(adapter);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final int pos = position;
+                Toast toast;
+                switch (position) {
+                    case 0:
+                        toast = Toast.makeText(getApplicationContext(), tutorArrayList.get(position).getTitle(), Toast.LENGTH_LONG);
+                        toast.show();
+
+                        break;
+                    case 1:
+                        toast = Toast.makeText(getApplicationContext(), tutorArrayList.get(position).getTitle(), Toast.LENGTH_LONG);
+                        toast.show();
+                        break;
+                    case 2:
+                        toast = Toast.makeText(getApplicationContext(), tutorArrayList.get(position).getTitle(), Toast.LENGTH_LONG);
+                        toast.show();
+                        break;
+                    case 3:
+                        toast = Toast.makeText(getApplicationContext(), tutorArrayList.get(position).getTitle(), Toast.LENGTH_LONG);
+                        toast.show();
+                        break;
+
+                }
+            }
+        });
 
     }
 
