@@ -44,6 +44,7 @@ public class Registrer2Activity extends AppCompatActivity implements FirebaseAut
     private String password;
     private String cellphone;
     private String country;
+    private String choice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class Registrer2Activity extends AppCompatActivity implements FirebaseAut
         password = intent.getStringExtra(RegistrerActivity.password);
         cellphone = intent.getStringExtra(RegistrerActivity.cellphone);
         country = intent.getStringExtra(RegistrerActivity.country);
+        choice = intent.getStringExtra(RegistrerActivity.choice);
     }
 
     @Override
@@ -80,7 +82,8 @@ public class Registrer2Activity extends AppCompatActivity implements FirebaseAut
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         new DoPost().execute(task.getResult().getUser().getUid()+","+numeroTarjeta.getText().toString()+","+new Date()+","+
-                                postal.getText().toString()+","+cvv.getText().toString()+","+nombre+","+apellido+","+email+","+cellphone+","+country);
+                                postal.getText().toString()+","+cvv.getText().toString()+
+                                ","+nombre+","+apellido+","+email+","+cellphone+","+country+","+choice);
                         viewLogin();
 
                     }
@@ -104,7 +107,7 @@ public class Registrer2Activity extends AppCompatActivity implements FirebaseAut
             String [] parametros = params[0].split(",");
             System.out.println(Arrays.toString(parametros));
             //Url to Post
-            String url = "http://192.168.0.13:8080/app/addUser";
+            String url = "http://10.2.67.72:8080/app/addUser";
 
             HttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(url);
@@ -123,6 +126,7 @@ public class Registrer2Activity extends AppCompatActivity implements FirebaseAut
                 jsonObject.put("phone",parametros[8]);
                 jsonObject.put("country",parametros[9]);
                 jsonObject.put("age",20);
+                jsonObject.put("isStudent",parametros[10]);
                 System.out.println("JSON"+ jsonObject.toString());
             }catch (Exception e){
                 e.printStackTrace();
