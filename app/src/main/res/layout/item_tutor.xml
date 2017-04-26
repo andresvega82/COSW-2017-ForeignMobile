@@ -34,6 +34,7 @@
                 android:maxHeight="35dp"
                 android:maxWidth="74dp"
                 android:src="@drawable/profesor1" />
+
         </LinearLayout>
 
         <LinearLayout
