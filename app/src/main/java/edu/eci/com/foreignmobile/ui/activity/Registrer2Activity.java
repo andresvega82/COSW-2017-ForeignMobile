@@ -22,6 +22,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -143,7 +144,7 @@ public class Registrer2Activity extends AppCompatActivity implements FirebaseAut
                 httpPost.setEntity(stringEntity);
                 HttpResponse httpResponse = httpClient.execute(httpPost);
 
-                //System.out.println(EntityUtils.toString(httpResponse.getEntity()));
+                System.out.println(EntityUtils.toString(httpResponse.getEntity()));
 
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();

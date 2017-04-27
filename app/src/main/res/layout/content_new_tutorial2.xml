@@ -25,15 +25,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="cursive"
-                android:text="Tutorias"
-                android:gravity="center"
-                android:textColor="@color/colorAccent"
-                android:layout_margin="10px"
-                android:textSize="15pt"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="cursive"
                 android:text="Seleccione un tutor"
                 android:textColor="@color/colorPrimary"
                 android:layout_margin="10px"
@@ -45,20 +36,12 @@
                 android:layout_height="wrap_content"
                 android:drawSelectorOnTop="false" />
 
-
         </LinearLayout>
 
     </FrameLayout>
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
-        app:menu="@menu/navegation"
-        tools:layout_editor_absoluteY="33dp"
-        tools:layout_editor_absoluteX="8dp" >
-
-    </android.support.design.widget.BottomNavigationView>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_weight="0.02" />
 
 </LinearLayout >
