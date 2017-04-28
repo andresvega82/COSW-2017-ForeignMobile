@@ -15,13 +15,14 @@ import edu.eci.com.foreignmobile.R;
  */
 
 public class HistorialActivity extends AppCompatActivity{
-
-
+    Intent intent;
+    String userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historial);
-
+        intent = getIntent();
+        userId = intent.getStringExtra("userId");
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -35,17 +36,19 @@ public class HistorialActivity extends AppCompatActivity{
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Intent fragen = null;
             switch (item.getItemId()) {
                 case R.id.navigation_newTutorial:
-                    fragen = new Intent(HistorialActivity.this, NewTutorialActivity.class);
-                    startActivity(fragen);
+                    intent = new Intent(HistorialActivity.this, NewTutorialActivity.class);
+                    intent.putExtra("userId",userId);
+                    intent.putExtra("view","1");
+                    startActivity(intent);
                     return true;
                 case R.id.navigation_historial:
                     return true;
                 case R.id.navigation_myTutorial:
-                    fragen = new Intent(HistorialActivity.this, MyTutorialsActivity.class);
-                    startActivity(fragen);
+                    intent = new Intent(HistorialActivity.this, MyTutorialsActivity.class);
+                    intent.putExtra("userId",userId);
+                    startActivity(intent);
                     return true;
 
             }

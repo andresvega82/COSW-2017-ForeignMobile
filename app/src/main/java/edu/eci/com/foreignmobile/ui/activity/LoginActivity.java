@@ -68,6 +68,7 @@ public class LoginActivity extends AppCompatActivity implements FirebaseAuth.Aut
         pr.setVisibility(View.GONE);
         Intent next = new Intent(this,NewTutorialActivity.class);
         next.putExtra("userId",userId);
+        next.putExtra("view","1");
         startActivity(next);
     }
 }

@@ -109,7 +109,7 @@
                     android:layout_weight="1"
                     android:fontFamily="cursive"
                     android:text="Cancelar"
-                    android:onClick="cancelarTutoria"/>
+                    android:onClick="cancelTutorial"/>
 
                 <Button
                     android:id="@+id/button_aceptar_tutoria"
@@ -117,7 +117,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="cursive"
-                    android:onClick="singUp"
                     android:text="Aceptar" />
 
 

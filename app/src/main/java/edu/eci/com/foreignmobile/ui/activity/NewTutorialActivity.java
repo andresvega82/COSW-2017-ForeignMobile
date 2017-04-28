@@ -2,6 +2,7 @@ package edu.eci.com.foreignmobile.ui.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -32,6 +33,7 @@ public class NewTutorialActivity extends AppCompatActivity
 
 
     String userId="";
+    String view = "";
     Spinner listLanguages;
     String[] languages = {"English", "Español", "Portugues", "Deutsch"};
     String[] tutorias = { "tutor 1", "tutor 2", "tutor 3", "tutor 4"};
@@ -44,12 +46,15 @@ public class NewTutorialActivity extends AppCompatActivity
     Intent intent;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_tutorial);
-        Intent intent = getIntent();
+        intent = getIntent();
         userId = intent.getStringExtra("userId");
+        view = intent.getStringExtra("view");
+
 
         ///
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -69,11 +74,47 @@ public class NewTutorialActivity extends AppCompatActivity
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        ///
-        selectLanguage();
-        selectDate();
-        //selectTutorial();
+        if(Integer.parseInt(view) == 1)
+        {
+            findViewById(R.id.content_new_tutorial).setVisibility(View.VISIBLE);
+            findViewById(R.id.content_new_tutorial2).setVisibility(View.INVISIBLE);
+            findViewById(R.id.content_new_tutorial3).setVisibility(View.INVISIBLE);
+            getSupportActionBar().setTitle("Nueva Tutoria");
+            selectLanguage();
+            selectDate();
 
+        }
+        else if(Integer.parseInt(view) == 2){
+            findViewById(R.id.content_new_tutorial).setVisibility(View.INVISIBLE);
+            findViewById(R.id.content_new_tutorial2).setVisibility(View.VISIBLE);
+            findViewById(R.id.content_new_tutorial3).setVisibility(View.INVISIBLE);
+            date = intent.getStringExtra("date");
+            language = intent.getStringExtra("language");
+            getSupportActionBar().setTitle("Tutores");
+            selectListTutorials();
+        }
+        else if(Integer.parseInt(view) == 3){
+            findViewById(R.id.content_new_tutorial).setVisibility(View.INVISIBLE);
+            findViewById(R.id.content_new_tutorial2).setVisibility(View.INVISIBLE);
+            findViewById(R.id.content_new_tutorial3).setVisibility(View.VISIBLE);
+            date = intent.getStringExtra("date");
+            language = intent.getStringExtra("language");
+            getSupportActionBar().setTitle("Detalles de Tutoria");
+            viewDetails();
+
+        }
+
+    }
+
+    private void viewDetails() {
+        TextView txtCambiado = (TextView)findViewById(R.id.idioma);
+        txtCambiado.setText("Idioma : "+intent.getStringExtra("language"));
+
+        txtCambiado = (TextView)findViewById(R.id.fecha);
+        txtCambiado.setText("Fecha : "+intent.getStringExtra("date"));
+
+        txtCambiado = (TextView)findViewById(R.id.name_tutor);
+        txtCambiado.setText("Nombre : "+intent.getStringExtra("tutorName"));
     }
 
     private void selectDate() {
@@ -87,8 +128,8 @@ public class NewTutorialActivity extends AppCompatActivity
             public void onSelectedDayChange(CalendarView calendarView, int i, int i1, int i2) {
                 dateDisplay.setText("Día seleccionado: " + i2 + " / " + i1 + " / " + i);
 
-                Toast.makeText(getApplicationContext(), "Día seleccionado:\n" + "Día = " + i2 + "\n" + "Mes = " + i1 + "\n" + "Año = " + i, Toast.LENGTH_LONG).show();
-                date = "Día = " + i2 + "Mes = " + i1 + "Año = " + i;
+                Toast.makeText(getApplicationContext(), "Día seleccionado:\n" + "Día = " + i2 + "\n" + "Mes = " + i1 + "\n" + "Año = " + i, Toast.LENGTH_SHORT).show();
+                date = "Día: " + i2 + ", Mes: " + i1 + ", Año: " + i;
             }
         });
 
@@ -97,20 +138,40 @@ public class NewTutorialActivity extends AppCompatActivity
 
     public void searchTutorial(View view){
 
-        findViewById(R.id.content_new_tutorial).setVisibility(View.INVISIBLE);
-        findViewById(R.id.content_new_tutorial2).setVisibility(View.VISIBLE);
-        findViewById(R.id.content_new_tutorial3).setVisibility(View.INVISIBLE);
-        getSupportActionBar().setTitle("Tutores");
-        selectListTutorials();
+        if(language != "" & date != "") {
+
+            intent = new Intent(this, NewTutorialActivity.class);
+            intent.putExtra("userId", userId);
+            intent.putExtra("language", language);
+            intent.putExtra("date", date);
+            intent.putExtra("view", "2");
+            startActivity(intent);
+        } else {
+            Toast.makeText(getApplicationContext(), "Llene todos los campos", Toast.LENGTH_SHORT);
+        }
+
     }
 
-    public void cancelarTutoria(View view){
-        findViewById(R.id.content_new_tutorial).setVisibility(View.VISIBLE);
-        findViewById(R.id.content_new_tutorial3).setVisibility(View.INVISIBLE);
-        findViewById(R.id.content_new_tutorial2).setVisibility(View.INVISIBLE);
-        getSupportActionBar().setTitle("Nueva Tutoria");
+    public void cancelTutorial(View view){
+
+        intent = new Intent(this, NewTutorialActivity.class);
+        intent.putExtra("userId",userId);
+        intent.putExtra("view","1");
+        startActivity(intent);
 
     }
+
+    private void selectTutorial() {
+
+        intent = new Intent(this, NewTutorialActivity.class);
+        intent.putExtra("userId",userId);
+        intent.putExtra("view","3");
+        intent.putExtra("language", language);
+        intent.putExtra("date", date);
+        intent.putExtra("tutorName", tutor.getTitle());
+        startActivity(intent);
+    }
+
 
     private void selectListTutorials() {
 
@@ -139,25 +200,25 @@ public class NewTutorialActivity extends AppCompatActivity
                 Toast toast;
                 switch (position) {
                     case 0:
-                        toast = Toast.makeText(getApplicationContext(), tutorArrayList.get(position).getTitle(), Toast.LENGTH_LONG);
+                        toast = Toast.makeText(getApplicationContext(), tutorArrayList.get(position).getTitle(), Toast.LENGTH_SHORT);
                         tutor = tutorArrayList.get(position);
                         toast.show();
                         selectTutorial();
                         break;
                     case 1:
-                        toast = Toast.makeText(getApplicationContext(), tutorArrayList.get(position).getTitle(), Toast.LENGTH_LONG);
+                        toast = Toast.makeText(getApplicationContext(), tutorArrayList.get(position).getTitle(), Toast.LENGTH_SHORT);
                         tutor = tutorArrayList.get(position);
                         toast.show();
                         selectTutorial();
                         break;
                     case 2:
-                        toast = Toast.makeText(getApplicationContext(), tutorArrayList.get(position).getTitle(), Toast.LENGTH_LONG);
+                        toast = Toast.makeText(getApplicationContext(), tutorArrayList.get(position).getTitle(), Toast.LENGTH_SHORT);
                         tutor = tutorArrayList.get(position);
                         toast.show();
                         selectTutorial();
                         break;
                     case 3:
-                        toast = Toast.makeText(getApplicationContext(), tutorArrayList.get(position).getTitle(), Toast.LENGTH_LONG);
+                        toast = Toast.makeText(getApplicationContext(), tutorArrayList.get(position).getTitle(), Toast.LENGTH_SHORT);
                         tutor = tutorArrayList.get(position);
                         toast.show();
                         selectTutorial();
@@ -168,24 +229,6 @@ public class NewTutorialActivity extends AppCompatActivity
         });
 
     }
-
-    private void selectTutorial() {
-
-        findViewById(R.id.content_new_tutorial).setVisibility(View.INVISIBLE);
-        findViewById(R.id.content_new_tutorial2).setVisibility(View.INVISIBLE);
-        findViewById(R.id.content_new_tutorial3).setVisibility(View.VISIBLE);
-        getSupportActionBar().setTitle("Detalles de Tutoria");
-        TextView txtCambiado = (TextView)findViewById(R.id.idioma);
-        txtCambiado.setText("Idioma : "+language);
-
-        txtCambiado = (TextView)findViewById(R.id.fecha);
-        txtCambiado.setText("Fecha : "+date);
-
-        txtCambiado = (TextView)findViewById(R.id.name_tutor);
-        txtCambiado.setText("Nombre : "+tutor.getTitle());
-
-    }
-
 
     private void selectLanguage() {
         listLanguages = (Spinner) findViewById(R.id.list_languages);
@@ -232,17 +275,17 @@ public class NewTutorialActivity extends AppCompatActivity
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Intent fragen = null;
+            Intent intent = null;
             switch (item.getItemId()) {
                 case R.id.navigation_newTutorial:
                     return true;
                 case R.id.navigation_historial:
-                    fragen = new Intent(NewTutorialActivity.this, HistorialActivity.class);
-                    startActivity(fragen);
+                    intent = new Intent(NewTutorialActivity.this, HistorialActivity.class);
+                    startActivity(intent);
                     return true;
                 case R.id.navigation_myTutorial:
-                    fragen = new Intent(NewTutorialActivity.this, MyTutorialsActivity.class);
-                    startActivity(fragen);
+                    intent = new Intent(NewTutorialActivity.this, MyTutorialsActivity.class);
+                    startActivity(intent);
                     return true;
 
             }

@@ -2,6 +2,8 @@ package edu.eci.com.foreignmobile.entities;
 
 import android.graphics.drawable.Drawable;
 
+import java.util.Date;
+
 /**
  * Created by tatiana higuera
  * on 25/04/17.
@@ -57,4 +59,7 @@ public class Tutor {
     public void setCategoryId(String categoryId){this.categoryId = categoryId;}
 
 
+    public String getParcelable() {
+        return ""+categoryId+" "+title+" "+description;
+    }
 }
