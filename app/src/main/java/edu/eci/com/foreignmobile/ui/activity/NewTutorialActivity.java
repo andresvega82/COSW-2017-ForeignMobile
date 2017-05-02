@@ -35,7 +35,7 @@ public class NewTutorialActivity extends AppCompatActivity
     String userId="";
     String view = "";
     Spinner listLanguages;
-    String[] languages = {"English", "Español", "Portugues", "Deutsch"};
+    String[] languages = {"Seleccionar","English", "Español", "Portugues", "Deutsch"};
     String[] tutorias = { "tutor 1", "tutor 2", "tutor 3", "tutor 4"};
     CalendarView calendarView;
     TextView dateDisplay;
@@ -127,8 +127,6 @@ public class NewTutorialActivity extends AppCompatActivity
             @Override
             public void onSelectedDayChange(CalendarView calendarView, int i, int i1, int i2) {
                 dateDisplay.setText("Día seleccionado: " + i2 + " / " + i1 + " / " + i);
-
-                Toast.makeText(getApplicationContext(), "Día seleccionado:\n" + "Día = " + i2 + "\n" + "Mes = " + i1 + "\n" + "Año = " + i, Toast.LENGTH_SHORT).show();
                 date = "Día: " + i2 + ", Mes: " + i1 + ", Año: " + i;
             }
         });
@@ -138,16 +136,24 @@ public class NewTutorialActivity extends AppCompatActivity
 
     public void searchTutorial(View view){
 
-        if(language != "" & date != "") {
+        if(language != "" ) {
+            if(date != "") {
+                intent = new Intent(this, NewTutorialActivity.class);
+                intent.putExtra("userId", userId);
+                intent.putExtra("language", language);
+                intent.putExtra("date", date);
+                intent.putExtra("view", "2");
+                startActivity(intent);
+            }
+            else {
+                Toast toast = Toast.makeText(getApplicationContext(), "Seleccione una fecha", Toast.LENGTH_SHORT);
+                toast.show();
 
-            intent = new Intent(this, NewTutorialActivity.class);
-            intent.putExtra("userId", userId);
-            intent.putExtra("language", language);
-            intent.putExtra("date", date);
-            intent.putExtra("view", "2");
-            startActivity(intent);
+            }
         } else {
-            Toast.makeText(getApplicationContext(), "Llene todos los campos", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), "Seleccione un lenguaje", Toast.LENGTH_SHORT);
+            toast.show();
+
         }
 
     }
@@ -239,28 +245,9 @@ public class NewTutorialActivity extends AppCompatActivity
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Toast toast;
-                language = languages[position];
-                switch (position){
-                    case 0:
-                        toast = Toast.makeText(getApplicationContext(), languages[position], Toast.LENGTH_LONG);
-                        toast.show();
+                if(!languages[position].equals(languages[0]))
+                    language = languages[position];
 
-                        break;
-                    case 1:
-                        toast = Toast.makeText(getApplicationContext(), languages[position], Toast.LENGTH_LONG);
-                        toast.show();
-                        break;
-                    case 2:
-                        toast = Toast.makeText(getApplicationContext(), languages[position], Toast.LENGTH_LONG);
-                        toast.show();
-                        break;
-                    case 3:
-                        toast = Toast.makeText(getApplicationContext(), languages[position], Toast.LENGTH_LONG);
-                        toast.show();
-                        break;
-
-
-                }
             }
 
             @Override
@@ -280,10 +267,19 @@ public class NewTutorialActivity extends AppCompatActivity
                 case R.id.navigation_newTutorial:
                     return true;
                 case R.id.navigation_historial:
+
+                    findViewById(R.id.content_new_tutorial).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.content_new_tutorial2).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.content_new_tutorial3).setVisibility(View.INVISIBLE);
+                    System.out.println("--------------------------------------------------------------------------------------");
                     intent = new Intent(NewTutorialActivity.this, HistorialActivity.class);
                     startActivity(intent);
                     return true;
                 case R.id.navigation_myTutorial:
+
+                    findViewById(R.id.content_new_tutorial).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.content_new_tutorial2).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.content_new_tutorial3).setVisibility(View.INVISIBLE);
                     intent = new Intent(NewTutorialActivity.this, MyTutorialsActivity.class);
                     startActivity(intent);
                     return true;
