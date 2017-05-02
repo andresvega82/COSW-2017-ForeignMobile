@@ -241,15 +241,15 @@ public class HistorialActivity extends AppCompatActivity
             Intent intent = null;
             switch (item.getItemId()) {
                 case R.id.navigation_newTutorial:
-                    return true;
-                case R.id.navigation_historial:
-
-                    findViewById(R.id.content_new_tutorial).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.content_new_tutorial).setVisibility(View.VISIBLE);
                     findViewById(R.id.content_new_tutorial2).setVisibility(View.INVISIBLE);
                     findViewById(R.id.content_new_tutorial3).setVisibility(View.INVISIBLE);
-                    System.out.println("--------------------------------------------------------------------------------------");
-                    intent = new Intent(HistorialActivity.this, HistorialActivity.class);
+                    intent = new Intent(HistorialActivity.this, NewTutorialActivity.class);
+                    intent.putExtra("userID",userId);
+                    intent.putExtra("view", "1");
                     startActivity(intent);
+                case R.id.navigation_historial:
+
                     return true;
                 case R.id.navigation_myTutorial:
 
