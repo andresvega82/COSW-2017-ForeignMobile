@@ -22,6 +22,7 @@ import edu.eci.com.foreignmobile.R;
 public class LoginActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener {
 
     private FirebaseAuth firebase = FirebaseAuth.getInstance();
+    EditText email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class LoginActivity extends AppCompatActivity implements FirebaseAuth.Aut
     public void login(View v){
         ProgressBar pr = (ProgressBar) findViewById(R.id.progressBar2);
         pr.setVisibility(View.VISIBLE);
-        EditText email = (EditText) findViewById(R.id.editText8);
+        email=(EditText) findViewById(R.id.editText8);
         EditText password = (EditText) findViewById(R.id.editText9);
         if(!email.getText().toString().equals("") && !password.getText().toString().equals("")) {
             firebase.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -68,6 +69,7 @@ public class LoginActivity extends AppCompatActivity implements FirebaseAuth.Aut
         pr.setVisibility(View.GONE);
         Intent next = new Intent(this,NewTutorialActivity.class);
         next.putExtra("userId",userId);
+        next.putExtra("email",email.getText());
         next.putExtra("view","1");
         startActivity(next);
     }
