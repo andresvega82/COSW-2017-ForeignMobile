@@ -273,6 +273,9 @@ public class NewTutorialActivity extends AppCompatActivity
                     findViewById(R.id.content_new_tutorial3).setVisibility(View.INVISIBLE);
                     System.out.println("--------------------------------------------------------------------------------------");
                     intent = new Intent(NewTutorialActivity.this, HistorialActivity.class);
+
+                    intent.putExtra("userID",userId);
+                    intent.putExtra("view", "1");
                     startActivity(intent);
                     return true;
                 case R.id.navigation_myTutorial:
