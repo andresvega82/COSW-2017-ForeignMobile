@@ -1,32 +1,74 @@
 package edu.eci.com.foreignmobile.ui.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.BottomNavigationView;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CalendarView;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import edu.eci.com.foreignmobile.R;
+import edu.eci.com.foreignmobile.entities.AdapterItem;
+import edu.eci.com.foreignmobile.entities.Tutor;
 
-/**
- * Created by tata on 26/04/17.
- */
+public class MyTutorialsActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
-public class MyTutorialsActivity extends AppCompatActivity{
 
-    Intent intent = null;
-    String userId;
+    String userId="";
+    String view = "";
+    Intent intent;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_tutorials);
+        setContentView(R.layout.activity_new_tutorial);
         intent = getIntent();
         userId = intent.getStringExtra("userId");
+        view = intent.getStringExtra("view");
+
+
+        ///
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Mis Tutorias");
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.container);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        ///
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        ///
 
+
+        findViewById(R.id.content_new_tutorial).setVisibility(View.INVISIBLE);
+        findViewById(R.id.activity_my_tutorials).setVisibility(View.VISIBLE);
 
     }
 
@@ -35,18 +77,20 @@ public class MyTutorialsActivity extends AppCompatActivity{
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Intent intent = null;
             switch (item.getItemId()) {
                 case R.id.navigation_newTutorial:
                     intent = new Intent(MyTutorialsActivity.this, NewTutorialActivity.class);
-                    intent.putExtra("userId",userId);
-                    intent.putExtra("view","1");
+                    intent.putExtra("userID",userId);
+                    intent.putExtra("view", "1");
                     startActivity(intent);
                     return true;
+
                 case R.id.navigation_historial:
                     intent = new Intent(MyTutorialsActivity.this, HistorialActivity.class);
-                    intent.putExtra("userId",userId);
                     startActivity(intent);
                     return true;
+
                 case R.id.navigation_myTutorial:
                     return true;
 
@@ -57,4 +101,15 @@ public class MyTutorialsActivity extends AppCompatActivity{
 
     };
 
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
+    }
+
+    public void viewProfile(MenuItem item) {
+        Intent intent = new Intent(this,ProfileActivity.class);
+        intent.putExtra("userID",userId);
+        startActivity(intent);
+    }
 }

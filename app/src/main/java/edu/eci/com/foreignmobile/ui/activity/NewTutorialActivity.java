@@ -23,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import edu.eci.com.foreignmobile.R;
 import edu.eci.com.foreignmobile.entities.AdapterItem;
@@ -126,8 +128,14 @@ public class NewTutorialActivity extends AppCompatActivity
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView calendarView, int i, int i1, int i2) {
-                dateDisplay.setText("Día seleccionado: " + i2 + " / " + i1 + " / " + i);
-                date = "Día: " + i2 + ", Mes: " + i1 + ", Año: " + i;
+                Date date1 = new Date();
+                if(date1.getDate()< i2 & date1.getMonth() <= i1 & date1.getYear() <= i) {
+                    dateDisplay.setText("Día seleccionado: " + i2 + " / " + i1 + " / " + i);
+                    date = "Día: " + i2 + ", Mes: " + i1 + ", Año: " + i;
+                }else {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Seleccione una fecha correcta.", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
             }
         });
 
@@ -267,11 +275,6 @@ public class NewTutorialActivity extends AppCompatActivity
                 case R.id.navigation_newTutorial:
                     return true;
                 case R.id.navigation_historial:
-
-                    findViewById(R.id.content_new_tutorial).setVisibility(View.INVISIBLE);
-                    findViewById(R.id.content_new_tutorial2).setVisibility(View.INVISIBLE);
-                    findViewById(R.id.content_new_tutorial3).setVisibility(View.INVISIBLE);
-                    System.out.println("--------------------------------------------------------------------------------------");
                     intent = new Intent(NewTutorialActivity.this, HistorialActivity.class);
 
                     intent.putExtra("userID",userId);
@@ -279,10 +282,6 @@ public class NewTutorialActivity extends AppCompatActivity
                     startActivity(intent);
                     return true;
                 case R.id.navigation_myTutorial:
-
-                    findViewById(R.id.content_new_tutorial).setVisibility(View.INVISIBLE);
-                    findViewById(R.id.content_new_tutorial2).setVisibility(View.INVISIBLE);
-                    findViewById(R.id.content_new_tutorial3).setVisibility(View.INVISIBLE);
                     intent = new Intent(NewTutorialActivity.this, MyTutorialsActivity.class);
                     startActivity(intent);
                     return true;

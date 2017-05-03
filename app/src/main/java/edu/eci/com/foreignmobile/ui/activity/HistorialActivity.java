@@ -12,8 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.BottomNavigationView;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
@@ -34,15 +36,6 @@ public class HistorialActivity extends AppCompatActivity
 
     String userId="";
     String view = "";
-    Spinner listLanguages;
-    String[] languages = {"Seleccionar","English", "Español", "Portugues", "Deutsch"};
-    String[] tutorias = { "tutor 1", "tutor 2", "tutor 3", "tutor 4"};
-    CalendarView calendarView;
-    TextView dateDisplay;
-    ArrayList<Tutor> tutorArrayList = new ArrayList<Tutor>();
-    Tutor tutor = null;
-    String language = "";
-    String date = "";
     Intent intent;
 
 
@@ -82,157 +75,6 @@ public class HistorialActivity extends AppCompatActivity
 
     }
 
-    private void viewDetails() {
-        TextView txtCambiado = (TextView)findViewById(R.id.idioma);
-        txtCambiado.setText("Idioma : "+intent.getStringExtra("language"));
-
-        txtCambiado = (TextView)findViewById(R.id.fecha);
-        txtCambiado.setText("Fecha : "+intent.getStringExtra("date"));
-
-        txtCambiado = (TextView)findViewById(R.id.name_tutor);
-        txtCambiado.setText("Nombre : "+intent.getStringExtra("tutorName"));
-    }
-
-    private void selectDate() {
-
-        calendarView = (CalendarView) findViewById(R.id.calendar);
-        dateDisplay = (TextView) findViewById(R.id.date_display);
-        dateDisplay.setText("Día seleccionado: ");
-
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(CalendarView calendarView, int i, int i1, int i2) {
-                dateDisplay.setText("Día seleccionado: " + i2 + " / " + i1 + " / " + i);
-                date = "Día: " + i2 + ", Mes: " + i1 + ", Año: " + i;
-            }
-        });
-
-    }
-
-
-    public void searchTutorial(View view){
-
-        if(language != "" ) {
-            if(date != "") {
-                intent = new Intent(this, NewTutorialActivity.class);
-                intent.putExtra("userId", userId);
-                intent.putExtra("language", language);
-                intent.putExtra("date", date);
-                intent.putExtra("view", "2");
-                startActivity(intent);
-            }
-            else {
-                Toast toast = Toast.makeText(getApplicationContext(), "Seleccione una fecha", Toast.LENGTH_SHORT);
-                toast.show();
-
-            }
-        } else {
-            Toast toast = Toast.makeText(getApplicationContext(), "Seleccione un lenguaje", Toast.LENGTH_SHORT);
-            toast.show();
-
-        }
-
-    }
-
-    public void cancelTutorial(View view){
-
-        intent = new Intent(this, NewTutorialActivity.class);
-        intent.putExtra("userId",userId);
-        intent.putExtra("view","1");
-        startActivity(intent);
-
-    }
-
-    private void selectTutorial() {
-
-        intent = new Intent(this, NewTutorialActivity.class);
-        intent.putExtra("userId",userId);
-        intent.putExtra("view","3");
-        intent.putExtra("language", language);
-        intent.putExtra("date", date);
-        intent.putExtra("tutorName", tutor.getTitle());
-        startActivity(intent);
-    }
-
-
-    private void selectListTutorials() {
-
-        //ListView listView = (ListView) findViewById(R.id.listTutorials);
-        //ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,tutorias);
-        //listView.setAdapter(adapter);
-
-
-
-        ListView lv = (ListView) findViewById(R.id.listTutorials);
-
-        Drawable photo = getResources().getDrawable( R.drawable.profesor1);
-        tutorArrayList.add(new Tutor("English", "Seth Rowan", "Want to learn fast & have fun? I teach English/ French using music/film/ poetry/jornalism! Contact me to speed up your learning!.", photo));
-        photo = getResources().getDrawable( R.drawable.profesor2);
-        tutorArrayList.add(new Tutor("English", "Stephanie Hourly", "Lorem ipsum dolor sit amet consectetur et sed adipiscing elit. Curabitur vel sem sit dolor neque semper magna lorem ipsum.", photo));
-        photo = getResources().getDrawable( R.drawable.profesor3);
-        tutorArrayList.add(new Tutor("English", "John Stephen Thomas", "Want to learn fast & have fun? I teach English/ French using music/film/ poetry/jornalism! Contact me to speed up your learning!.", photo));
-
-        AdapterItem adapter = new AdapterItem(this, tutorArrayList);
-        lv.setAdapter(adapter);
-
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final int pos = position;
-                Toast toast;
-                switch (position) {
-                    case 0:
-                        toast = Toast.makeText(getApplicationContext(), tutorArrayList.get(position).getTitle(), Toast.LENGTH_SHORT);
-                        tutor = tutorArrayList.get(position);
-                        toast.show();
-                        selectTutorial();
-                        break;
-                    case 1:
-                        toast = Toast.makeText(getApplicationContext(), tutorArrayList.get(position).getTitle(), Toast.LENGTH_SHORT);
-                        tutor = tutorArrayList.get(position);
-                        toast.show();
-                        selectTutorial();
-                        break;
-                    case 2:
-                        toast = Toast.makeText(getApplicationContext(), tutorArrayList.get(position).getTitle(), Toast.LENGTH_SHORT);
-                        tutor = tutorArrayList.get(position);
-                        toast.show();
-                        selectTutorial();
-                        break;
-                    case 3:
-                        toast = Toast.makeText(getApplicationContext(), tutorArrayList.get(position).getTitle(), Toast.LENGTH_SHORT);
-                        tutor = tutorArrayList.get(position);
-                        toast.show();
-                        selectTutorial();
-                        break;
-
-                }
-            }
-        });
-
-    }
-
-    private void selectLanguage() {
-        listLanguages = (Spinner) findViewById(R.id.list_languages);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, languages);
-        listLanguages.setAdapter(adapter);
-
-        listLanguages.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast toast;
-                if(!languages[position].equals(languages[0]))
-                    language = languages[position];
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }
-
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -241,21 +83,13 @@ public class HistorialActivity extends AppCompatActivity
             Intent intent = null;
             switch (item.getItemId()) {
                 case R.id.navigation_newTutorial:
-                    findViewById(R.id.content_new_tutorial).setVisibility(View.VISIBLE);
-                    findViewById(R.id.content_new_tutorial2).setVisibility(View.INVISIBLE);
-                    findViewById(R.id.content_new_tutorial3).setVisibility(View.INVISIBLE);
                     intent = new Intent(HistorialActivity.this, NewTutorialActivity.class);
                     intent.putExtra("userID",userId);
                     intent.putExtra("view", "1");
                     startActivity(intent);
                 case R.id.navigation_historial:
-
                     return true;
                 case R.id.navigation_myTutorial:
-
-                    findViewById(R.id.content_new_tutorial).setVisibility(View.INVISIBLE);
-                    findViewById(R.id.content_new_tutorial2).setVisibility(View.INVISIBLE);
-                    findViewById(R.id.content_new_tutorial3).setVisibility(View.INVISIBLE);
                     intent = new Intent(HistorialActivity.this, MyTutorialsActivity.class);
                     startActivity(intent);
                     return true;
