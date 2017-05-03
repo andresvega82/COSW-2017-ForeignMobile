@@ -30,8 +30,8 @@
 
         </activity>
         <activity android:name=".ui.activity.ProfileActivity">
-
         </activity>
+
         <activity android:name=".ui.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
