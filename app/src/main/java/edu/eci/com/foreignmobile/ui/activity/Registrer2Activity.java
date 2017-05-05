@@ -1,12 +1,25 @@
 package edu.eci.com.foreignmobile.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,12 +38,20 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Date;
 
+import edu.eci.com.foreignmobile.BuildConfig;
 import edu.eci.com.foreignmobile.R;
+
+import static edu.eci.com.foreignmobile.R.id.imageButton;
+import static edu.eci.com.foreignmobile.R.id.imageView;
 
 /**
  * Created by 2099340 on 4/19/17.
@@ -46,6 +67,11 @@ public class Registrer2Activity extends AppCompatActivity implements FirebaseAut
     private String cellphone;
     private String country;
     private String choice;
+    private String APP_DIRECTORY = "myPictureApp/";
+    private String MEDIA_DIRECTORY = APP_DIRECTORY+"media";
+    private String TEMPORAL_PICTURE_NAME = "photo.jpg";
+    private String location ="";
+    private Bitmap bitmap = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +108,18 @@ public class Registrer2Activity extends AppCompatActivity implements FirebaseAut
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+                        byte[] bArray = bos.toByteArray();
+                        String encodedImage = "";
+                        try {
+                            encodedImage = new String(bArray, Charset.forName("UTF-8"));
+                        } catch (Exception   e) {
+                            e.printStackTrace();
+                        }
                         new DoPost().execute(task.getResult().getUser().getUid()+","+numeroTarjeta.getText().toString()+","+new Date()+","+
                                 postal.getText().toString()+","+cvv.getText().toString()+
-                                ","+nombre+","+apellido+","+email+","+cellphone+","+country+","+choice);
+                                ","+nombre+","+apellido+","+email+","+cellphone+","+country+","+choice+","+encodedImage);
                         viewLogin();
 
                     }
@@ -101,6 +136,99 @@ public class Registrer2Activity extends AppCompatActivity implements FirebaseAut
         startActivity(next);
     }
 
+    public void addPhoto(View view) {
+        final CharSequence[] options = {"Camera", "Galeria","Cancel"};
+        final AlertDialog.Builder builder = new AlertDialog.Builder(Registrer2Activity.this);
+        builder.setTitle("Choose an option");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                if(options[which]=="Camera"){
+                    openCamera();
+                }else if(options[which]=="Galeria"){
+                    Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    //i.setType("image/*");
+                    startActivityForResult(i, 200);
+
+                    //Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    //intent.setType("imagen/*");
+                    //startActivityForResult(intent.createChooser(intent,"Choose an app"),200);
+                }else if (options[which]=="Cancel"){
+                    dialog.dismiss();
+                }
+            }
+
+
+        });
+        builder.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case 100:
+                if(resultCode== RESULT_OK){
+                    String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)+File.separator+MEDIA_DIRECTORY+File.separator+TEMPORAL_PICTURE_NAME;
+                    location = dir+"";
+                    System.out.println(location+" Con camara queda aqui.");
+                    decodeBitmap(dir);
+                }
+                break;
+            case 200:
+                if(resultCode==RESULT_OK){
+                    Uri path = data.getData();
+                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                    Cursor cursor = getContentResolver().query(path,filePathColumn, null, null, null);
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    location = cursor.getString(columnIndex)+"";
+                    cursor.close();
+                    Bitmap bmp = null;
+                    try {
+                        bmp = getBitmapFromUri(path);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    bitmap = bmp;
+                    bitmap = Bitmap.createScaledBitmap(bitmap,300,400,true);
+                    ImageButton ib = (ImageButton) findViewById(R.id.imageButton);
+                    ib.setImageBitmap(bitmap);
+                }
+                break;
+        }
+    }
+
+
+
+    private Bitmap getBitmapFromUri(Uri uri) throws IOException {
+        ParcelFileDescriptor parcelFileDescriptor =getContentResolver().openFileDescriptor(uri, "r");
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+        parcelFileDescriptor.close();
+        return image;
+    }
+
+    private void decodeBitmap(String dir) {
+        bitmap = BitmapFactory.decodeFile(dir);
+        bitmap = Bitmap.createScaledBitmap(bitmap,300,400,true);
+        ImageButton ib = (ImageButton) findViewById(R.id.imageButton);
+        ib.setImageBitmap(bitmap);
+
+    }
+
+    private void openCamera() {
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),MEDIA_DIRECTORY);
+        file.mkdirs();
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)+File.separator+MEDIA_DIRECTORY+File.separator+TEMPORAL_PICTURE_NAME;
+        File newFile = new File(path);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID+".provider",newFile));
+        startActivityForResult(intent,100);
+
+    }
+
 
     private class DoPost extends AsyncTask<String, Integer, String> {
         @Override
@@ -108,7 +236,7 @@ public class Registrer2Activity extends AppCompatActivity implements FirebaseAut
             String [] parametros = params[0].split(",");
             System.out.println(Arrays.toString(parametros));
             //Url to Post
-            String url = "http://10.2.67.68:8080/app/addUser";
+            String url = "http://192.168.0.13:8080/app/addUser";
 
             HttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(url);
@@ -128,6 +256,7 @@ public class Registrer2Activity extends AppCompatActivity implements FirebaseAut
                 jsonObject.put("country",parametros[9]);
                 jsonObject.put("age",20);
                 jsonObject.put("isStudent",parametros[10]);
+                jsonObject.put("photo",parametros[11]);
                 System.out.println("JSON"+ jsonObject.toString());
             }catch (Exception e){
                 e.printStackTrace();
@@ -140,17 +269,13 @@ public class Registrer2Activity extends AppCompatActivity implements FirebaseAut
 
                 // Do Post and create JSON Object
                 StringEntity stringEntity = new StringEntity(jsonObject.toString());
-                stringEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/json"));
+                stringEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/json; charset=UTF-8"));
                 httpPost.setEntity(stringEntity);
                 HttpResponse httpResponse = httpClient.execute(httpPost);
 
                 System.out.println(EntityUtils.toString(httpResponse.getEntity()));
 
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
