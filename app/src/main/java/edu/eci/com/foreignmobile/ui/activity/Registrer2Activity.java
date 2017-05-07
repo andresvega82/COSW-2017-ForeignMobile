@@ -30,6 +30,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -236,13 +237,11 @@ public class Registrer2Activity extends AppCompatActivity implements FirebaseAut
             String [] parametros = params[0].split(",");
             System.out.println(Arrays.toString(parametros));
             //Url to Post
-            String url = "http://192.168.0.13:8080/app/addUser";
-
+            String url = "https://foreignest.herokuapp.com/app/addUser";
             HttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(url);
             JSONObject jsonObject = new JSONObject();
             try{
-
                 jsonObject.put("paymentId",Integer.parseInt(parametros[1]));
                 jsonObject.put("cardNumber",Integer.parseInt(parametros[1]));
                 jsonObject.put("expirationDate","2017-04-02");

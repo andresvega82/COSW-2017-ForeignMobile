@@ -301,6 +301,7 @@ public class NewTutorialActivity extends AppCompatActivity
 
     public void viewProfile(MenuItem item) {
         Intent intent = new Intent(this,ProfileActivity.class);
+        System.out.println("This is userId in newTutorial: "+userId);
         intent.putExtra("userID",userId);
         startActivity(intent);
     }

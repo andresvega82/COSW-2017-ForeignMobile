@@ -1,6 +1,7 @@
 package edu.eci.com.foreignmobile.ui.activity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,7 +21,21 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
+
+import java.util.Arrays;
 
 import edu.eci.com.foreignmobile.R;
 import edu.eci.com.foreignmobile.entities.User;
@@ -37,6 +52,12 @@ public class ProfileActivity extends AppCompatActivity
     private String userId="";
     private String emailUser="";
     private User u=new User();
+    private TextView nombre;
+    private TextView age;
+    private TextView country;
+    private TextView mail;
+    private TextView phone;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -45,21 +66,16 @@ public class ProfileActivity extends AppCompatActivity
         getSupportActionBar().hide();
         setContentView(R.layout.activity_profile);
         intent = getIntent();
-        userId = intent.getStringExtra("UserId");
+        userId = intent.getStringExtra("userID");
         emailUser=intent.getStringExtra("email");
-
-        TextView nombre= (TextView) findViewById(R.id.nombre);
-        TextView mail=(TextView) findViewById(R.id.correo);
-        TextView age= (TextView) findViewById(R.id.edad);
-        TextView country=(TextView) findViewById(R.id.vive);
-        TextView phone=(TextView) findViewById(R.id.telefono);
+        nombre= (TextView) findViewById(R.id.nombre);
+        mail=(TextView) findViewById(R.id.correo);
+        age= (TextView) findViewById(R.id.edad);
+        country=(TextView) findViewById(R.id.vive);
+        phone=(TextView) findViewById(R.id.telefono);
         this.getClient();
-        System.out.print(emailUser);
-        nombre.setText("Nombre: "+u.getName()+" "+u.getLastName());
-        mail.setText("Correo electrónico: "+u.getEmail());
-        age.setText("Edad: "+u.getAge());
-        country.setText("País: "+u.getCountry());
-        phone.setText("Teléfono: "+u.getPhone());
+
+
 /*
         ///
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -114,28 +130,45 @@ public class ProfileActivity extends AppCompatActivity
     };
 
     public void getClient(){
+        DoPost doPost = new DoPost();
+        doPost.execute(userId);
 
-        RequestQueue queue= Volley.newRequestQueue(this);
-        String url="https://foreignest.herokuapp.com/clients/"+emailUser+"/";
-        StringRequest stringRequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                u=new Gson().fromJson(response, User.class);
-                System.out.print("Get");
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println("Error");
-            }
-        });
-        queue.add(stringRequest);
     }
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return false;
+    }
+
+    private class DoPost extends AsyncTask<String, User, User> {
+        @Override
+        protected User doInBackground(String... params) {
+            System.out.println("Params To Get --> "+params[0]);
+            //Url to Post
+            String url = "https://foreignest.herokuapp.com/clients/"+params[0]+"/";
+            System.out.println("This is teh URL: "+url);
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(url);
+            try{
+                HttpResponse httpResponse = httpClient.execute(httpGet);
+                ObjectMapper objectMapper = new ObjectMapper();
+                User[] myObject = objectMapper.readValue(httpResponse.getEntity().getContent(), User[].class);
+                this.publishProgress(myObject[0]);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(User... user) {
+            nombre.setText("Nombre: "+user[0].getName()+" "+user[0].getLastName());
+            mail.setText("Correo electrónico: "+user[0].getEmail());
+            age.setText("Edad: "+user[0].getAge());
+            country.setText("País: "+user[0].getCountry());
+            phone.setText("Teléfono: "+user[0].getPhone());
+
+        }
     }
 }

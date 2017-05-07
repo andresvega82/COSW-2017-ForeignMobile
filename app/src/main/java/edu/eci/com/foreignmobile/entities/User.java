@@ -126,4 +126,20 @@ public class User implements Serializable {
     public void setLanguajes(Set<Languaje> languajes) {
         this.languajes = languajes;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "user_id='" + user_id + '\'' +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", country='" + country + '\'' +
+                ", photo=" + photo +
+                ", age=" + age +
+                ", CreditCard_payment_id=" + CreditCard_payment_id +
+                ", languajes=" + languajes +
+                '}';
+    }
 }
