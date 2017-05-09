@@ -3,6 +3,7 @@ package edu.eci.com.foreignmobile.ui.activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,6 +37,7 @@ import java.util.Date;
 import edu.eci.com.foreignmobile.R;
 import edu.eci.com.foreignmobile.entities.AdapterItem;
 import edu.eci.com.foreignmobile.entities.Tutor;
+import edu.eci.com.foreignmobile.entities.User;
 
 public class NewTutorialActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -200,13 +209,13 @@ public class NewTutorialActivity extends AppCompatActivity
         ListView lv = (ListView) findViewById(R.id.listTutorials);
 
         Drawable photo = getResources().getDrawable( R.drawable.profesor1);
-        tutorArrayList.add(new Tutor("English", "Seth Rowan", "Want to learn fast & have fun? I teach English/ French using music/film/ poetry/jornalism! Contact me to speed up your learning!.", photo));
+        tutorArrayList.add(new Tutor("English", "Seth Rowan", "Want to learn fast & have fun? I teach English/ French using music/film/ poetry/jornalism! Contact me to speed up your learning!.", 20000 , photo));
         photo = getResources().getDrawable( R.drawable.profesor2);
-        tutorArrayList.add(new Tutor("English", "Stephanie Hourly", "Lorem ipsum dolor sit amet consectetur et sed adipiscing elit. Curabitur vel sem sit dolor neque semper magna lorem ipsum.", photo));
+        tutorArrayList.add(new Tutor("English", "Stephanie Hourly", "Lorem ipsum dolor sit amet consectetur et sed adipiscing elit. Curabitur vel sem sit dolor neque semper magna lorem ipsum.", 23000 ,photo));
         photo = getResources().getDrawable( R.drawable.profesor3);
-        tutorArrayList.add(new Tutor("English", "John Stephen Thomas", "Want to learn fast & have fun? I teach English/ French using music/film/ poetry/jornalism! Contact me to speed up your learning!.", photo));
+        tutorArrayList.add(new Tutor("English", "John Stephen Thomas", "Want to learn fast & have fun? I teach English/ French using music/film/ poetry/jornalism! Contact me to speed up your learning!.", 25000 , photo));
 
-        //tutorArrayList = getTutorials();
+        //getTutorials();
 
         AdapterItem adapter = new AdapterItem(this, tutorArrayList);
         lv.setAdapter(adapter);
@@ -310,9 +319,40 @@ public class NewTutorialActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    public ArrayList<Tutor> getTutorials() {
-        ArrayList<Tutor> tutorials = null;
+    public void getTutorials() {
 
-        return tutorials;
+        DoPost doPost = new DoPost();
+        doPost.execute(userId);
+    }
+
+
+    private class DoPost extends AsyncTask<String, Tutor, Tutor> {
+        @Override
+        protected Tutor doInBackground(String... params) {
+            System.out.println("Params To Get --> "+params[0]);
+            //Url to Post
+            String url = "https://foreignest.herokuapp.com/tutorial/tutoresMobile"+params[0]+"/";
+            System.out.println("This is teh URL: "+url);
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(url);
+            try{
+                HttpResponse httpResponse = httpClient.execute(httpGet);
+                ObjectMapper objectMapper = new ObjectMapper();
+                Tutor[] myObject = objectMapper.readValue(httpResponse.getEntity().getContent(), Tutor[].class);
+                this.publishProgress(myObject[0]);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Tutor... Tutor) {
+            for (int i = 0; i> Tutor.length; i++){
+                tutorArrayList.add(Tutor[i]);
+            }
+
+        }
     }
 }

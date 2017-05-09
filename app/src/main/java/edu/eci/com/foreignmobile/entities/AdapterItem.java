@@ -70,6 +70,9 @@ public class AdapterItem extends BaseAdapter {
         TextView description = (TextView) v.findViewById(R.id.texto);
         description.setText(dir.getDescription());
 
+        TextView costo = (TextView) v.findViewById(R.id.costo);
+        costo.setText(dir.getCost());
+
         ImageView imagen = (ImageView) v.findViewById(R.id.imageView4);
         imagen.setImageDrawable(dir.getImage());
 

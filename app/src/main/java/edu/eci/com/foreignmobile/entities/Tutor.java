@@ -16,16 +16,18 @@ public class Tutor {
     private String categoryId;
     private String description;
     private Drawable imagen;
+    private int cost;
 
     public Tutor() {
         super();
     }
 
-    public Tutor(String categoryId, String title, String description, Drawable imagen) {
+    public Tutor(String categoryId, String title, String description, int cost, Drawable imagen) {
         super();
         this.title = title;
         this.description = description;
         this.imagen = imagen;
+        this.cost = cost;
         this.categoryId = categoryId;
     }
 
@@ -58,6 +60,13 @@ public class Tutor {
 
     public void setCategoryId(String categoryId){this.categoryId = categoryId;}
 
+    public String getCost() {
+        return "Costo de tutoria: "+cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
 
     public String getParcelable() {
         return ""+categoryId+" "+title+" "+description;

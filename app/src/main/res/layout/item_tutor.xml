@@ -68,6 +68,17 @@
                 android:text="Texto Frase"
                 android:textColor="@color/colorPrimary" />
 
+            <TextView
+                android:id="@+id/costo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/category"
+                android:layout_toEndOf="@+id/imageView4"
+                android:layout_toRightOf="@+id/imageView4"
+                android:layout_weight="1.87"
+                android:text="Texto Frase"
+                android:textColor="@color/colorPrimary" />
+
         </LinearLayout>
 
     </LinearLayout>
