@@ -110,17 +110,17 @@ public class Registrer2Activity extends AppCompatActivity implements FirebaseAut
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
-                        byte[] bArray = bos.toByteArray();
+                        //bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+                        //byte[] bArray = bos.toByteArray();
                         String encodedImage = "";
                         try {
-                            encodedImage = new String(bArray, Charset.forName("UTF-8"));
+                            //encodedImage = new String(bArray, Charset.forName("UTF-8"));
                         } catch (Exception   e) {
                             e.printStackTrace();
                         }
                         new DoPost().execute(task.getResult().getUser().getUid()+","+numeroTarjeta.getText().toString()+","+new Date()+","+
                                 postal.getText().toString()+","+cvv.getText().toString()+
-                                ","+nombre+","+apellido+","+email+","+cellphone+","+country+","+choice+","+encodedImage);
+                                ","+nombre+","+apellido+","+email+","+cellphone+","+country+","+choice);
                         viewLogin();
 
                     }
@@ -237,7 +237,9 @@ public class Registrer2Activity extends AppCompatActivity implements FirebaseAut
             String [] parametros = params[0].split(",");
             System.out.println(Arrays.toString(parametros));
             //Url to Post
+
             String url = "https://foreignest.herokuapp.com/app/addUser";
+            //String url = "https://192.168.193.1:8080/app/addUser";
             HttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(url);
             JSONObject jsonObject = new JSONObject();
@@ -255,7 +257,7 @@ public class Registrer2Activity extends AppCompatActivity implements FirebaseAut
                 jsonObject.put("country",parametros[9]);
                 jsonObject.put("age",20);
                 jsonObject.put("isStudent",parametros[10]);
-                jsonObject.put("photo",parametros[11]);
+                //jsonObject.put("photo",parametros[11]);
                 System.out.println("JSON"+ jsonObject.toString());
             }catch (Exception e){
                 e.printStackTrace();
@@ -268,7 +270,7 @@ public class Registrer2Activity extends AppCompatActivity implements FirebaseAut
 
                 // Do Post and create JSON Object
                 StringEntity stringEntity = new StringEntity(jsonObject.toString());
-                stringEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/json; charset=UTF-8"));
+                stringEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/json"));
                 httpPost.setEntity(stringEntity);
                 HttpResponse httpResponse = httpClient.execute(httpPost);
 
