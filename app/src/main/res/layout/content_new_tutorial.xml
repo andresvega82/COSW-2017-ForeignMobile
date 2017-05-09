@@ -27,7 +27,6 @@
                 android:id="@+id/textLanguage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="cursive"
                 android:text="  ¿Qué idioma quieres practicar?"
                 android:textAlignment="viewStart"
                 android:textColor="@color/colorAccent"
@@ -44,7 +43,6 @@
                 android:id="@+id/textCalendar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="cursive"
                 android:text="  ¿Que día deseas la tutoria?"
                 android:textAlignment="viewStart"
                 android:textColor="@color/colorAccent"
@@ -60,7 +58,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                android:fontFamily="cursive"
                 android:layout_weight="0.66"
                 android:textSize="20dp" />
 
@@ -72,7 +69,6 @@
         android:id="@+id/buscarTutor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="cursive"
         android:textColor="@color/colorAccent"
         android:text="Buscar tutorias"
         android:onClick="searchTutorial"/>

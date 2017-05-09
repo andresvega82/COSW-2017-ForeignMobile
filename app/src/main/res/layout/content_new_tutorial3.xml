@@ -32,7 +32,6 @@
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_weight="1"
                 android:text="Idioma : "
-                android:fontFamily="cursive"
                 android:textSize="20dp"
                 />
 
@@ -46,7 +45,6 @@
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_weight="1"
                 android:text="Fecha : "
-                android:fontFamily="cursive"
                 android:textSize="20dp"
                 />
 
@@ -54,7 +52,6 @@
                 android:id="@+id/textView_title2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="cursive"
                 android:text="Detalles de Tutor"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent"
@@ -91,7 +88,6 @@
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:layout_weight="1"
-                    android:fontFamily="cursive"
                     android:text="Nombre : "
                     android:textSize="20dp" />
 
@@ -107,7 +103,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:fontFamily="cursive"
                     android:text="Cancelar"
                     android:onClick="cancelTutorial"/>
 
@@ -116,7 +111,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:fontFamily="cursive"
                     android:text="Aceptar" />
 
 

@@ -51,7 +51,6 @@
                 android:layout_toEndOf="@+id/imageView4"
                 android:layout_toRightOf="@+id/imageView4"
                 android:layout_weight="1.87"
-                android:fontFamily="cursive"
                 android:gravity="center"
                 android:text="Titulo Frase"
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -66,7 +65,6 @@
                 android:layout_toEndOf="@+id/imageView4"
                 android:layout_toRightOf="@+id/imageView4"
                 android:layout_weight="3.85"
-                android:fontFamily="cursive"
                 android:text="Texto Frase"
                 android:textColor="@color/colorPrimary" />
 

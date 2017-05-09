@@ -10,13 +10,15 @@
         android:layout_width="wrap_content"
         android:layout_height="260dp"
         android:backgroundTint="@color/colorFondo"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="1">
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
-            android:layout_height="248dp"
-            app:srcCompat="@drawable/fondo_foreign4" />
+            android:layout_height="225dp"
+            app:srcCompat="@drawable/fondo_foreign4"
+            android:layout_weight="0.13" />
 
 
     </LinearLayout>
@@ -40,7 +42,6 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="cursive"
                 android:text="Iniciar sesión:"
                 android:textColor="@color/colorPrimary"
                 android:textSize="30dp" />
@@ -63,7 +64,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:fontFamily="cursive"
                 android:hint="Nombre Usuario"
                 android:inputType="textEmailAddress"
                 android:textColorHint="@color/common_google_signin_btn_text_light_focused"
@@ -74,7 +74,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:fontFamily="cursive"
                 android:hint="Contraseña"
                 android:inputType="textPassword"
                 android:textColorHint="@color/common_google_signin_btn_text_light_focused"
@@ -86,7 +85,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/colorPrimaryDark"
-                android:fontFamily="cursive"
                 android:onClick="login"
                 android:text="Ingresar"
                 android:textColor="@color/colorAccent"
@@ -96,7 +94,6 @@
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="cursive"
                 android:onClick="signUp"
                 android:text="Registrarme"
                 android:textAlignment="textEnd"

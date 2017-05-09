@@ -94,6 +94,7 @@ public class NewTutorialActivity extends AppCompatActivity
             language = intent.getStringExtra("language");
             getSupportActionBar().setTitle("Tutores");
             selectListTutorials();
+
         }
         else if(Integer.parseInt(view) == 3){
             findViewById(R.id.content_new_tutorial).setVisibility(View.INVISIBLE);
@@ -152,6 +153,7 @@ public class NewTutorialActivity extends AppCompatActivity
                 intent.putExtra("date", date);
                 intent.putExtra("view", "2");
                 startActivity(intent);
+
             }
             else {
                 Toast toast = Toast.makeText(getApplicationContext(), "Seleccione una fecha", Toast.LENGTH_SHORT);
@@ -203,6 +205,8 @@ public class NewTutorialActivity extends AppCompatActivity
         tutorArrayList.add(new Tutor("English", "Stephanie Hourly", "Lorem ipsum dolor sit amet consectetur et sed adipiscing elit. Curabitur vel sem sit dolor neque semper magna lorem ipsum.", photo));
         photo = getResources().getDrawable( R.drawable.profesor3);
         tutorArrayList.add(new Tutor("English", "John Stephen Thomas", "Want to learn fast & have fun? I teach English/ French using music/film/ poetry/jornalism! Contact me to speed up your learning!.", photo));
+
+        //tutorArrayList = getTutorials();
 
         AdapterItem adapter = new AdapterItem(this, tutorArrayList);
         lv.setAdapter(adapter);
@@ -304,5 +308,11 @@ public class NewTutorialActivity extends AppCompatActivity
         System.out.println("This is userId in newTutorial: "+userId);
         intent.putExtra("userID",userId);
         startActivity(intent);
+    }
+
+    public ArrayList<Tutor> getTutorials() {
+        ArrayList<Tutor> tutorials = null;
+
+        return tutorials;
     }
 }

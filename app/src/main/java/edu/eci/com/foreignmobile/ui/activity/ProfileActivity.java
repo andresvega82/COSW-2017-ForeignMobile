@@ -63,13 +63,22 @@ public class ProfileActivity extends AppCompatActivity
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
         setContentView(R.layout.activity_profile);
+
+        ///
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Mi Perfil");
+
+
+        ///
+
+
         intent = getIntent();
         userId = intent.getStringExtra("userID");
         emailUser=intent.getStringExtra("email");
         nombre= (TextView) findViewById(R.id.nombre);
-        mail=(TextView) findViewById(R.id.correo);
+        mail=(TextView) findViewById(R.id.email);
         age= (TextView) findViewById(R.id.edad);
         country=(TextView) findViewById(R.id.vive);
         phone=(TextView) findViewById(R.id.telefono);
@@ -100,34 +109,6 @@ public class ProfileActivity extends AppCompatActivity
         findViewById(R.id.activity_my_tutorials).setVisibility(View.INVISIBLE);
         */
     }
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Intent intent = null;
-            switch (item.getItemId()) {
-                case R.id.navigation_newTutorial:
-                    intent = new Intent(ProfileActivity.this,NewTutorialActivity.class);
-                    intent.putExtra("userID",userId);
-                    intent.putExtra("view", "1");
-                    startActivity(intent);
-                case R.id.navigation_historial:
-                    intent = new Intent(ProfileActivity.this, HistorialActivity.class);
-                    startActivity(intent);
-                    return true;
-                case R.id.navigation_myTutorial:
-                    intent = new Intent(ProfileActivity.this, MyTutorialsActivity.class);
-                    startActivity(intent);
-                    return true;
-
-            }
-            return false;
-        }
-
-
-    };
 
     public void getClient(){
         DoPost doPost = new DoPost();
@@ -163,8 +144,8 @@ public class ProfileActivity extends AppCompatActivity
 
         @Override
         protected void onProgressUpdate(User... user) {
-            nombre.setText("Nombre: "+user[0].getName()+" "+user[0].getLastName());
-            mail.setText("Correo electrónico: "+user[0].getEmail());
+            nombre.setText(user[0].getName()+" "+user[0].getLastName());
+            mail.setText(user[0].getEmail());
             age.setText("Edad: "+user[0].getAge());
             country.setText("País: "+user[0].getCountry());
             phone.setText("Teléfono: "+user[0].getPhone());
