@@ -21,6 +21,7 @@ public class User implements Serializable {
     private int CreditCard_payment_id;
     private Set<Languaje> languajes = new HashSet<>(0);
 
+
     public User(){
 
     }
@@ -35,6 +36,7 @@ public class User implements Serializable {
         this.age = Age;
         this.CreditCard_payment_id = creditCard;
     }
+
 
     public User(String id, String name, String lastName, String email, String phone, String country, Integer Age, Set<Languaje> languajes) {
         this.name = name;
@@ -57,6 +59,10 @@ public class User implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public String getFullName() {
+        return name+" "+lastName;
     }
 
     public void setName(String name) {

@@ -6,9 +6,9 @@ package edu.eci.com.foreignmobile.entities;
 
 public class IdTutor {
 
-    int id;
-    int lenguajeId;
-    int tearchersId;
+    Integer id;
+    Integer lenguajeId;
+    Integer tearchersId;
 
     public IdTutor(){
     }
@@ -19,7 +19,7 @@ public class IdTutor {
         this.tearchersId = tearchersId;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -27,7 +27,7 @@ public class IdTutor {
         this.id = id;
     }
 
-    public int getLenguajeId() {
+    public Integer getLenguajeId() {
         return lenguajeId;
     }
 
@@ -35,7 +35,7 @@ public class IdTutor {
         this.lenguajeId = lenguajeId;
     }
 
-    public int getTearchersId() {
+    public Integer getTearchersId() {
         return tearchersId;
     }
 

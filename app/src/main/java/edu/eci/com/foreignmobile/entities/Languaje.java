@@ -4,7 +4,7 @@ package edu.eci.com.foreignmobile.entities;
  * Created by nicolasguzmanp on 25/04/17.
  */
 
-class Languaje {
+public class Languaje {
     private int lenguajeId;
     private String desciption;
 

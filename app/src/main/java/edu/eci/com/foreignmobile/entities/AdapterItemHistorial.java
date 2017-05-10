@@ -20,9 +20,9 @@ import edu.eci.com.foreignmobile.R;
 public class AdapterItemHistorial extends BaseAdapter {
 
     protected Activity activity;
-    protected ArrayList<Tutor> items;
+    protected ArrayList<TutoriaItem> items;
 
-    public AdapterItemHistorial(Activity activity, ArrayList<Tutor> items) {
+    public AdapterItemHistorial(Activity activity, ArrayList<TutoriaItem> items) {
         this.activity = activity;
         this.items = items;
     }
@@ -36,7 +36,7 @@ public class AdapterItemHistorial extends BaseAdapter {
         items.clear();
     }
 
-    public void addAll(ArrayList<Tutor> tutor) {
+    public void addAll(ArrayList<TutoriaItem> tutor) {
         for (int i = 0; i < tutor.size(); i++) {
             items.add(tutor.get(i));
         }
@@ -59,22 +59,33 @@ public class AdapterItemHistorial extends BaseAdapter {
 
         if (convertView == null) {
             LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = inf.inflate(R.layout.item_tutor, null);
+            v = inf.inflate(R.layout.item_historia, null);
         }
 
-        Tutor dir = items.get(position);
+        TutoriaItem dir = items.get(position);
 
-        TextView title = (TextView) v.findViewById(R.id.category);
-        title.setText(dir.getTitle());
+        TextView nameTutor = (TextView) v.findViewById(R.id.nametutor);
+        nameTutor.setText("Profesor : "+dir.getName_profesor());
 
-        TextView description = (TextView) v.findViewById(R.id.texto);
-        description.setText(dir.getDescription());
+        TextView date = (TextView) v.findViewById(R.id.date);
+        date.setText("Fecha : "+dir.getDate().toString());
+
+        TextView duration = (TextView) v.findViewById(R.id.duration);
+        duration.setText("Duración : "+dir.getDuration());
+
+
+        TextView language = (TextView) v.findViewById(R.id.language);
+        language.setText("Lenguage : "+dir.getLanguage());
+
 
         TextView costo = (TextView) v.findViewById(R.id.costo);
-        costo.setText(dir.getCost());
+        costo.setText("Costo : "+dir.getCost());
+
+        TextView state = (TextView) v.findViewById(R.id.state);
+        state.setText("Estado : "+dir.getState());
 
         ImageView imagen = (ImageView) v.findViewById(R.id.imageView4);
-        imagen.setImageDrawable(dir.getImage());
+        imagen.setImageDrawable(dir.getImagen());
 
         return v;
     }

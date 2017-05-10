@@ -22,7 +22,7 @@
     <!--Nueva tutoria-->
     <include layout="@layout/content_new_tutorial"
         android:id="@+id/content_new_tutorial"
-        android:visibility="visible"/>
+        android:visibility="invisible"/>
     <include layout="@layout/content_new_tutorial2"
         android:id="@+id/content_new_tutorial2"
         android:visibility="invisible"/>
@@ -34,9 +34,15 @@
     <include layout="@layout/activity_my_tutorials"
         android:id="@+id/activity_my_tutorials"
         android:visibility="invisible"/>
+
+    <include layout="@layout/activity_my_tutorials2"
+        android:id="@+id/activity_my_tutorials2"
+        android:visibility="visible"/>
+
     <include layout="@layout/activity_historial"
         android:id="@+id/activity_historial"
         android:visibility="invisible"/>
+
     <!--  <include layout="@layout/activity_profile"
           android:id="@+id/activity_profile"
           android:visibility="invisible"/>

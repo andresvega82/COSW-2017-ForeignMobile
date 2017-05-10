@@ -1,29 +1,18 @@
 package edu.eci.com.foreignmobile.ui.activity;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.design.widget.BottomNavigationView;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.CalendarView;
 import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -37,15 +26,13 @@ import java.util.Date;
 import javax.net.ssl.HttpsURLConnection;
 
 import edu.eci.com.foreignmobile.R;
-import edu.eci.com.foreignmobile.entities.AdapterItem;
-import edu.eci.com.foreignmobile.entities.AdapterItemHistorial;
+import edu.eci.com.foreignmobile.entities.AdapterItemMyTutorials;
 import edu.eci.com.foreignmobile.entities.IdTutor;
-import edu.eci.com.foreignmobile.entities.Tutor;
 import edu.eci.com.foreignmobile.entities.Tutoria;
 import edu.eci.com.foreignmobile.entities.TutoriaItem;
 import edu.eci.com.foreignmobile.entities.User;
 
-public class HistorialActivity extends AppCompatActivity
+public class MyTutorials2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
@@ -53,11 +40,11 @@ public class HistorialActivity extends AppCompatActivity
     String view = "";
     Intent intent;
 
+
     ArrayList<Tutoria> tutoriasArrayList = new ArrayList<Tutoria>();
     ArrayList<Integer> tutorIdArrayList = new ArrayList<Integer>();
     ArrayList<User> usersArrayList = new ArrayList<User>();
     ArrayList<TutoriaItem> tutorArrayList = new ArrayList<TutoriaItem>();
-
 
 
     @Override
@@ -69,10 +56,12 @@ public class HistorialActivity extends AppCompatActivity
         view = intent.getStringExtra("view");
 
 
+
+
         ///
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Historial");
+        getSupportActionBar().setTitle("Mis Tutorias");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.container);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -89,15 +78,15 @@ public class HistorialActivity extends AppCompatActivity
         ///
 
 
-
         findViewById(R.id.content_new_tutorial).setVisibility(View.INVISIBLE);
-        findViewById(R.id.activity_historial).setVisibility(View.VISIBLE);
+        findViewById(R.id.activity_my_tutorials).setVisibility(View.VISIBLE);
+
 
         getTutorials();
         getTutoresById();
 
-
     }
+
 
     private void listTutorials() {
 
@@ -107,34 +96,22 @@ public class HistorialActivity extends AppCompatActivity
 
 
 
-        ListView lv = (ListView) findViewById(R.id.listTutorials2);
+        ListView lv = (ListView) findViewById(R.id.listTutorials3);
 
-        Drawable photo = getResources().getDrawable( R.drawable.profesor1);
-
-        /*tutorArrayList.add(new Tutor("English", "Seth Rowan", "Want to learn fast & have fun? I teach English/ French using music/film/ poetry/jornalism! Contact me to speed up your learning!.", 20000 , photo));
+        /* Drawable photo = getResources().getDrawable( R.drawable.profesor1);
+        tutorArrayList.add(new Tutor("English", "Seth Rowan", "Want to learn fast & have fun? I teach English/ French using music/film/ poetry/jornalism! Contact me to speed up your learning!.", 20000 , photo));
         photo = getResources().getDrawable( R.drawable.profesor2);
         tutorArrayList.add(new Tutor("English", "Stephanie Hourly", "Lorem ipsum dolor sit amet consectetur et sed adipiscing elit. Curabitur vel sem sit dolor neque semper magna lorem ipsum.", 23000 ,photo));
         photo = getResources().getDrawable( R.drawable.profesor3);
         tutorArrayList.add(new Tutor("English", "John Stephen Thomas", "Want to learn fast & have fun? I teach English/ French using music/film/ poetry/jornalism! Contact me to speed up your learning!.", 25000 , photo));
         */
 
-        AdapterItemHistorial adapter = new AdapterItemHistorial(this, tutorArrayList);
+        AdapterItemMyTutorials adapter = new AdapterItemMyTutorials(this, tutorArrayList);
         lv.setAdapter(adapter);
 
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final int pos = position;
-
-
-
-            }
-        });
-
 
     }
-
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -145,15 +122,18 @@ public class HistorialActivity extends AppCompatActivity
             Intent intent = null;
             switch (item.getItemId()) {
                 case R.id.navigation_newTutorial:
-                    intent = new Intent(HistorialActivity.this, NewTutorialActivity.class);
+                    intent = new Intent(MyTutorials2Activity.this, NewTutorialActivity.class);
                     intent.putExtra("userID",userId);
                     intent.putExtra("view", "1");
                     startActivity(intent);
-                case R.id.navigation_historial:
                     return true;
-                case R.id.navigation_myTutorial:
-                    intent = new Intent(HistorialActivity.this, MyTutorialsActivity.class);
+
+                case R.id.navigation_historial:
+                    intent = new Intent(MyTutorials2Activity.this, HistorialActivity.class);
                     startActivity(intent);
+                    return true;
+
+                case R.id.navigation_myTutorial:
                     return true;
 
             }
@@ -177,11 +157,9 @@ public class HistorialActivity extends AppCompatActivity
 
 
 
-
     //get
 
     public void getTutorials() {
-
         DoGetTutorial doGetTutorial = new DoGetTutorial();
         doGetTutorial.execute();
 
@@ -273,7 +251,7 @@ public class HistorialActivity extends AppCompatActivity
             System.out.println("Response To onPostExecute --> "+p.toString());
             if(p!=null){
                 for (int i=0; i < p.size(); i++){
-                    if (p.get(i).getState().equals("Cancelada") | p.get(i).getState().equals("Finalizada"))
+                    if (p.get(i).getState().equals("Programada"))
                         tutoriasArrayList.add(p.get(i));
                 }
             }
@@ -337,7 +315,7 @@ public class HistorialActivity extends AppCompatActivity
                     TutoriaItem tutor = new TutoriaItem(tutoriasArrayList.get(i).getState(), user.getFullName(), tutoriasArrayList.get(i).getDate(), tutoriasArrayList.get(i).getDuration(), "Lenguaje" , tutoriasArrayList.get(i).getCost(), null);
                     resp.add(tutor);
 
-                    System.out.println("tutoria Historial ------------->"+ tutor.getName_profesor());
+                    System.out.println("tutoria My Tutorials ------------->"+ tutor.getName_profesor());
                 }
 
             }catch (Exception e){

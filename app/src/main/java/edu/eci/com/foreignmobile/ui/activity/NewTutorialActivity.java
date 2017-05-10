@@ -38,12 +38,15 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import edu.eci.com.foreignmobile.R;
 import edu.eci.com.foreignmobile.entities.AdapterItem;
 import edu.eci.com.foreignmobile.entities.IdTutor;
+import edu.eci.com.foreignmobile.entities.Languaje;
 import edu.eci.com.foreignmobile.entities.Tutor;
 import edu.eci.com.foreignmobile.entities.Tutoria;
 import edu.eci.com.foreignmobile.entities.User;
@@ -59,6 +62,9 @@ public class NewTutorialActivity extends AppCompatActivity
     String[] tutorias = { "tutor 1", "tutor 2", "tutor 3", "tutor 4"};
     CalendarView calendarView;
     TextView dateDisplay;
+    ArrayList<Tutoria> tutoriasArrayList = new ArrayList<Tutoria>();
+    ArrayList<Integer> tutorIdArrayList = new ArrayList<Integer>();
+    ArrayList<User> usersArrayList = new ArrayList<User>();
     ArrayList<Tutor> tutorArrayList = new ArrayList<Tutor>();
     Tutor tutor = null;
     String language = "";
@@ -112,6 +118,7 @@ public class NewTutorialActivity extends AppCompatActivity
             language = intent.getStringExtra("language");
             getSupportActionBar().setTitle("Tutores");
             getTutorials();
+            getTutoresById();
 
 
         }
@@ -233,33 +240,10 @@ public class NewTutorialActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final int pos = position;
                 Toast toast;
-                switch (position) {
-                    case 0:
-                        toast = Toast.makeText(getApplicationContext(), tutorArrayList.get(position).getTitle(), Toast.LENGTH_SHORT);
-                        tutor = tutorArrayList.get(position);
-                        toast.show();
-                        selectTutorial();
-                        break;
-                    case 1:
-                        toast = Toast.makeText(getApplicationContext(), tutorArrayList.get(position).getTitle(), Toast.LENGTH_SHORT);
-                        tutor = tutorArrayList.get(position);
-                        toast.show();
-                        selectTutorial();
-                        break;
-                    case 2:
-                        toast = Toast.makeText(getApplicationContext(), tutorArrayList.get(position).getTitle(), Toast.LENGTH_SHORT);
-                        tutor = tutorArrayList.get(position);
-                        toast.show();
-                        selectTutorial();
-                        break;
-                    case 3:
-                        toast = Toast.makeText(getApplicationContext(), tutorArrayList.get(position).getTitle(), Toast.LENGTH_SHORT);
-                        tutor = tutorArrayList.get(position);
-                        toast.show();
-                        selectTutorial();
-                        break;
-
-                }
+                toast = Toast.makeText(getApplicationContext(), tutorArrayList.get(position).getTitle(), Toast.LENGTH_SHORT);
+                tutor = tutorArrayList.get(position);
+                toast.show();
+                selectTutorial();
             }
         });
 
@@ -329,15 +313,22 @@ public class NewTutorialActivity extends AppCompatActivity
 
     public void getTutorials() {
 
-        DoPost doPost = new DoPost();
+        DoGetTutorials doGetTutorials = new DoGetTutorials();
+        doGetTutorials.execute();
+    }
+
+    public void getTutoresById() {
+
+        DoGetTutores doPost = new DoGetTutores();
         doPost.execute();
+
     }
 
 
-    private class DoPost extends AsyncTask<Void, String , ArrayList<Tutor>> {
+    private class DoGetTutorials extends AsyncTask<Void, String , ArrayList<Tutoria>> {
         @Override
-        protected ArrayList<Tutor> doInBackground(Void... params) {
-            ArrayList<Tutor> resp = new ArrayList<>();
+        protected ArrayList<Tutoria> doInBackground(Void... params) {
+            ArrayList<Tutoria> resp = new ArrayList<>();
 
             try {
                 URL url = new URL("https://foreignest.herokuapp.com/tutorial/tutoresMobile/");
@@ -373,6 +364,9 @@ public class NewTutorialActivity extends AppCompatActivity
 
                     // creacion de objetos tutoria
                     Date date = new Date();
+                    long date1 = Long.parseLong(jsonObject.getString("date"));
+                    date.setTime(date1);
+
                     String state = jsonObject.getString("state");
                     int duration = Integer.parseInt(jsonObject.getString("duration"));
 
@@ -387,12 +381,96 @@ public class NewTutorialActivity extends AppCompatActivity
 
                     Tutoria tutoria = new Tutoria(date, state, duration, idTutor, payment, cost);
 
+                    if(!tutorIdArrayList.contains(idTutor.getTearchersId())){
+                        tutorIdArrayList.add(idTutor.getTearchersId());
+                    }
+
+                    resp.add(tutoria);
+                }
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            return resp;
 
 
-                    Tutor tutor = new Tutor();
+        }
 
-                    //idUniversities.add(jsonObject.getString("username"));
-                    resp.add(tutor);
+
+        @Override
+        protected void onPostExecute(ArrayList<Tutoria> p) {
+            super.onPostExecute(p);
+            System.out.println("Response To onPostExecute --> "+p.toString());
+            if(p!=null){
+                for (int i=0; i < p.size(); i++){
+                    if (p.get(i).getState().equals("En_Espera"))
+                        tutoriasArrayList.add(p.get(i));
+                }
+            }
+        }
+    }
+
+
+
+    private class DoGetTutores extends AsyncTask<Void, String , ArrayList<Tutor>> {
+        @Override
+        protected ArrayList<Tutor> doInBackground(Void... params) {
+            ArrayList<Tutor> resp = new ArrayList<>();
+            usersArrayList = new ArrayList<>();
+            tutorArrayList = new ArrayList<>();
+            try {
+
+                for (int i=0;i<tutoriasArrayList.size();i++) {
+                    System.out.println("Tutorias ----->"+tutoriasArrayList.get(i).getIdTutor().getTearchersId());
+                    URL url = new URL("https://foreignest.herokuapp.com/tutores/tutor/" + tutoriasArrayList.get(i).getIdTutor().getTearchersId());
+                    HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+
+                    urlConnection.setRequestMethod("GET");
+                    urlConnection.setRequestProperty("Content-Type", "application/json");
+                    urlConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+
+                    int rc = urlConnection.getResponseCode();
+
+                    BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    String inputLine;
+                    StringBuffer response = new StringBuffer();
+
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    in.close();
+
+                    System.out.println("RESPONSE ------> " + response.toString());
+
+                    JSONObject jsonObject = new JSONObject(response.toString());
+
+
+                    String s;
+
+                    //System.out.println(jsonArray.getJSONObject(i).toString());
+                    //jsonObject = jsonArray.getJSONObject(i);
+
+
+                    // creacion de objetos tutoria
+
+                    String user_id = jsonObject.getString("user_id");
+                    String name = jsonObject.getString("name");
+                    String lastName = jsonObject.getString("lastName");
+                    String email = jsonObject.getString("email");
+                    String phone = jsonObject.getString("phone");
+                    String country = jsonObject.getString("country");
+                    Integer age = Integer.parseInt(jsonObject.getString("age"));
+                    String languaje = jsonObject.getString("languajes");
+                    Integer creditCard_payment_id = Integer.parseInt(jsonObject.getString("creditCard_payment_id"));
+                    Set<Languaje> languajes = new HashSet<>();
+                    User user = new User(user_id, name, lastName, email, phone, country, age, creditCard_payment_id);
+                    user.setLanguajes(languajes);
+                    usersArrayList.add(user);
+
+                    Tutor tutor = new Tutor(user.getLanguajes().toString(), user.getFullName(), user.getEmail(), tutoriasArrayList.get(i).getCost() , null);
+                    if(!resp.contains(tutor))
+                        resp.add(tutor);
                 }
 
             }catch (Exception e){

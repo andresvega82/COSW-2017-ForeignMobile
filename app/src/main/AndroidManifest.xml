@@ -20,6 +20,11 @@
         <activity android:name=".ui.activity.MyTutorialsActivity"
             android:theme="@style/AppTheme.NoActionBar">>
         </activity>
+
+        <activity android:name=".ui.activity.MyTutorials2Activity"
+            android:theme="@style/AppTheme.NoActionBar">>
+        </activity>
+
         <activity android:name=".ui.activity.HistorialActivity"
             android:theme="@style/AppTheme.NoActionBar">>
         </activity>

@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,9 +19,9 @@ import edu.eci.com.foreignmobile.R;
 public class AdapterItemMyTutorials extends BaseAdapter {
 
     protected Activity activity;
-    protected ArrayList<Tutor> items;
+    protected ArrayList<TutoriaItem> items;
 
-    public AdapterItemMyTutorials(Activity activity, ArrayList<Tutor> items) {
+    public AdapterItemMyTutorials(Activity activity, ArrayList<TutoriaItem> items) {
         this.activity = activity;
         this.items = items;
     }
@@ -36,7 +35,7 @@ public class AdapterItemMyTutorials extends BaseAdapter {
         items.clear();
     }
 
-    public void addAll(ArrayList<Tutor> tutor) {
+    public void addAll(ArrayList<TutoriaItem> tutor) {
         for (int i = 0; i < tutor.size(); i++) {
             items.add(tutor.get(i));
         }
@@ -59,22 +58,19 @@ public class AdapterItemMyTutorials extends BaseAdapter {
 
         if (convertView == null) {
             LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = inf.inflate(R.layout.item_tutor, null);
+            v = inf.inflate(R.layout.item_mis_tutorias, null);
         }
 
-        Tutor dir = items.get(position);
+        TutoriaItem dir = items.get(position);
 
-        TextView title = (TextView) v.findViewById(R.id.category);
-        title.setText(dir.getTitle());
+        TextView nameTutor = (TextView) v.findViewById(R.id.nametutor);
+        nameTutor.setText("Profesor : "+dir.getName_profesor());
 
-        TextView description = (TextView) v.findViewById(R.id.texto);
-        description.setText(dir.getDescription());
+        TextView date = (TextView) v.findViewById(R.id.date);
+        date.setText("Fecha : "+dir.getDate().toString());
 
-        TextView costo = (TextView) v.findViewById(R.id.costo);
-        costo.setText(dir.getCost());
-
-        ImageView imagen = (ImageView) v.findViewById(R.id.imageView4);
-        imagen.setImageDrawable(dir.getImage());
+        TextView language = (TextView) v.findViewById(R.id.language);
+        language.setText("Lenguage : "+dir.getLanguage());
 
         return v;
     }
