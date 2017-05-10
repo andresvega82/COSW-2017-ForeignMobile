@@ -43,6 +43,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 import edu.eci.com.foreignmobile.R;
 import edu.eci.com.foreignmobile.entities.AdapterItem;
+import edu.eci.com.foreignmobile.entities.IdTutor;
 import edu.eci.com.foreignmobile.entities.Tutor;
 import edu.eci.com.foreignmobile.entities.Tutoria;
 import edu.eci.com.foreignmobile.entities.User;
@@ -110,7 +111,8 @@ public class NewTutorialActivity extends AppCompatActivity
             date = intent.getStringExtra("date");
             language = intent.getStringExtra("language");
             getSupportActionBar().setTitle("Tutores");
-            selectListTutorials();
+            getTutorials();
+
 
         }
         else if(Integer.parseInt(view) == 3){
@@ -223,8 +225,6 @@ public class NewTutorialActivity extends AppCompatActivity
         photo = getResources().getDrawable( R.drawable.profesor3);
         tutorArrayList.add(new Tutor("English", "John Stephen Thomas", "Want to learn fast & have fun? I teach English/ French using music/film/ poetry/jornalism! Contact me to speed up your learning!.", 25000 , photo));
 
-        getTutorials();
-
         AdapterItem adapter = new AdapterItem(this, tutorArrayList);
         lv.setAdapter(adapter);
 
@@ -334,11 +334,10 @@ public class NewTutorialActivity extends AppCompatActivity
     }
 
 
-    private class DoPost extends AsyncTask<Void, String , ArrayList<String>> {
+    private class DoPost extends AsyncTask<Void, String , ArrayList<Tutor>> {
         @Override
-        protected ArrayList<String> doInBackground(Void... params) {
-            System.out.println("Start To Get --> ");
-            ArrayList<String> resp = new ArrayList<>();
+        protected ArrayList<Tutor> doInBackground(Void... params) {
+            ArrayList<Tutor> resp = new ArrayList<>();
 
             try {
                 URL url = new URL("https://foreignest.herokuapp.com/tutorial/tutoresMobile/");
@@ -349,7 +348,6 @@ public class NewTutorialActivity extends AppCompatActivity
                 urlConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
                 int rc = urlConnection.getResponseCode();
-                System.out.println(rc + "");
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                 String inputLine;
@@ -362,10 +360,40 @@ public class NewTutorialActivity extends AppCompatActivity
 
                 System.out.println("RESPONSE ------> "+response.toString());
 
-                //JSONObject jsonObject = new JSONObject(response.toString());
                 JSONArray jsonArray = new JSONArray(response.toString());
+
                 JSONObject jsonObject;
                 String s;
+
+                tutorArrayList = new ArrayList<>();
+                for (int i=0;i<jsonArray.length();i++) {
+                    //System.out.println(jsonArray.getJSONObject(i).toString());
+                    jsonObject=jsonArray.getJSONObject(i);
+
+
+                    // creacion de objetos tutoria
+                    Date date = new Date();
+                    String state = jsonObject.getString("state");
+                    int duration = Integer.parseInt(jsonObject.getString("duration"));
+
+                    JSONObject jsonObjectTutor = jsonObject.getJSONObject("idTutor");
+                    int id = Integer.parseInt(jsonObjectTutor.getString("id"));
+                    int lenguajeId = Integer.parseInt(jsonObjectTutor.getString("lenguajeId"));
+                    int teachersId = Integer.parseInt(jsonObjectTutor.getString("teachersId"));
+                    IdTutor idTutor = new IdTutor(id, lenguajeId, teachersId);
+
+                    int payment =  Integer.parseInt(jsonObject.getString("payment"));
+                    int cost = Integer.parseInt(jsonObject.getString("cost"));
+
+                    Tutoria tutoria = new Tutoria(date, state, duration, idTutor, payment, cost);
+
+
+
+                    Tutor tutor = new Tutor();
+
+                    //idUniversities.add(jsonObject.getString("username"));
+                    resp.add(tutor);
+                }
 
             }catch (Exception e){
                 e.printStackTrace();
@@ -378,72 +406,13 @@ public class NewTutorialActivity extends AppCompatActivity
 
 
         @Override
-        protected void onPostExecute(ArrayList<String> p) {
+        protected void onPostExecute(ArrayList<Tutor> p) {
             super.onPostExecute(p);
-            System.out.println("Response To Get --> "+p.toString());
+            System.out.println("Response To onPostExecute --> "+p.toString());
             if(p!=null){
-                //universities.clear();
-                //universities.addAll(p);
+                tutorArrayList = p;
             }
-            //mAdapter.notifyDataSetChanged();
-            //System.out.println(products.toString());
+            selectListTutorials();
         }
-
-            //Url to Post
-
-            /*
-            String url = "https://foreignest.herokuapp.com/tutorial/tutoresMobile/";
-            System.out.println("This is the URL: "+url);
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpGet httpGet = new HttpGet(url);
-
-            StringBuffer bufferCadena = new StringBuffer("");
-
-            try{
-                HttpResponse httpResponse = httpClient.execute(httpGet);
-                BufferedReader entrada = new BufferedReader(new InputStreamReader(
-                        httpResponse.getEntity().getContent()));
-
-                String separador = "";
-                String NL = System.getProperty("line.separator");
-
-
-                while ((separador = entrada.readLine()) != null) {
-                    bufferCadena.append(separador + NL);
-                }
-                entrada.close();
-
-                /*ObjectMapper objectMapper = new ObjectMapper();
-                Tutoria[] myObject = objectMapper.readValue(httpResponse.getEntity().getContent(), Tutoria[].class);
-                this.publishProgress(myObject);
-
-                JSONArray tutorias = new JSONArray(bufferCadena.toString());
-                JSONObject tutoria;
-
-                for(int index=0;index<tutorias.length();index++) {
-                    tutoria = (JSONObject) tutorias.get(index);
-                    bufferCadena.append(tutoria);
-                }
-
-                System.out.println("Response To Get --> "+ bufferCadena);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(String... array) {
-            System.out.println("Response To Get --> "+ array);
-
-            for (int i = 0; i> array.length; i++){
-
-                Tutor tutor = new Tutor();
-
-                tutorArrayList.add(tutor);
-            }
-
-        }*/
     }
 }
