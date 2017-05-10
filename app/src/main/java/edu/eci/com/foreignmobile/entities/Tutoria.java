@@ -11,16 +11,20 @@ public class Tutoria {
     Date date;
     String state;
     int duration;
+    IdTutor idTutor;
     int payment;
     int cost;
     public Tutoria() {
         super();
     }
 
-    public Tutoria(Date date, String state, int duration){
+    public Tutoria(Date date, String state, int duration, IdTutor idTutor, int payment, int cost){
         this.date = date;
         this.state = state;
         this.duration = duration;
+        this.idTutor = idTutor;
+        this.payment = payment;
+        this.cost = cost;
     }
 
     public Date getDate() {
@@ -61,5 +65,13 @@ public class Tutoria {
 
     public void setCost(int cost) {
         this.cost = cost;
+    }
+
+    public IdTutor getIdTutor() {
+        return idTutor;
+    }
+
+    public void setIdTutor(IdTutor idTutor) {
+        this.idTutor = idTutor;
     }
 }

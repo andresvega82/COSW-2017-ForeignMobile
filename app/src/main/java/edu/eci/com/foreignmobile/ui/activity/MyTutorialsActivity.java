@@ -35,7 +35,7 @@ public class MyTutorialsActivity extends AppCompatActivity
     String userId="";
     String view = "";
     Intent intent;
-
+    ArrayList<Tutor> tutorArrayList = new ArrayList<Tutor>();
 
 
     @Override
@@ -45,6 +45,8 @@ public class MyTutorialsActivity extends AppCompatActivity
         intent = getIntent();
         userId = intent.getStringExtra("userId");
         view = intent.getStringExtra("view");
+
+
 
 
         ///
@@ -70,7 +72,38 @@ public class MyTutorialsActivity extends AppCompatActivity
         findViewById(R.id.content_new_tutorial).setVisibility(View.INVISIBLE);
         findViewById(R.id.activity_my_tutorials).setVisibility(View.VISIBLE);
 
+
+
+        listTutorials();
+
     }
+
+
+    private void listTutorials() {
+
+        //ListView listView = (ListView) findViewById(R.id.listTutorials);
+        //ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,tutorias);
+        //listView.setAdapter(adapter);
+
+
+
+        ListView lv = (ListView) findViewById(R.id.listTutorials3);
+
+        Drawable photo = getResources().getDrawable( R.drawable.profesor1);
+        tutorArrayList.add(new Tutor("English", "Seth Rowan", "Want to learn fast & have fun? I teach English/ French using music/film/ poetry/jornalism! Contact me to speed up your learning!.", 20000 , photo));
+        photo = getResources().getDrawable( R.drawable.profesor2);
+        tutorArrayList.add(new Tutor("English", "Stephanie Hourly", "Lorem ipsum dolor sit amet consectetur et sed adipiscing elit. Curabitur vel sem sit dolor neque semper magna lorem ipsum.", 23000 ,photo));
+        photo = getResources().getDrawable( R.drawable.profesor3);
+        tutorArrayList.add(new Tutor("English", "John Stephen Thomas", "Want to learn fast & have fun? I teach English/ French using music/film/ poetry/jornalism! Contact me to speed up your learning!.", 25000 , photo));
+
+
+        AdapterItem adapter = new AdapterItem(this, tutorArrayList);
+        lv.setAdapter(adapter);
+
+
+
+    }
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {

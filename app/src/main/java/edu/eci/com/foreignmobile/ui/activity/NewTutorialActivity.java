@@ -29,14 +29,22 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import edu.eci.com.foreignmobile.R;
 import edu.eci.com.foreignmobile.entities.AdapterItem;
 import edu.eci.com.foreignmobile.entities.Tutor;
+import edu.eci.com.foreignmobile.entities.Tutoria;
 import edu.eci.com.foreignmobile.entities.User;
 
 public class NewTutorialActivity extends AppCompatActivity
@@ -215,7 +223,7 @@ public class NewTutorialActivity extends AppCompatActivity
         photo = getResources().getDrawable( R.drawable.profesor3);
         tutorArrayList.add(new Tutor("English", "John Stephen Thomas", "Want to learn fast & have fun? I teach English/ French using music/film/ poetry/jornalism! Contact me to speed up your learning!.", 25000 , photo));
 
-        //getTutorials();
+        getTutorials();
 
         AdapterItem adapter = new AdapterItem(this, tutorArrayList);
         lv.setAdapter(adapter);
@@ -322,24 +330,102 @@ public class NewTutorialActivity extends AppCompatActivity
     public void getTutorials() {
 
         DoPost doPost = new DoPost();
-        doPost.execute(userId);
+        doPost.execute();
     }
 
 
-    private class DoPost extends AsyncTask<String, Tutor, Tutor> {
+    private class DoPost extends AsyncTask<Void, String , ArrayList<String>> {
         @Override
-        protected Tutor doInBackground(String... params) {
-            System.out.println("Params To Get --> "+params[0]);
+        protected ArrayList<String> doInBackground(Void... params) {
+            System.out.println("Start To Get --> ");
+            ArrayList<String> resp = new ArrayList<>();
+
+            try {
+                URL url = new URL("https://foreignest.herokuapp.com/tutorial/tutoresMobile/");
+                HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+
+                urlConnection.setRequestMethod("GET");
+                urlConnection.setRequestProperty("Content-Type", "application/json");
+                urlConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+
+                int rc = urlConnection.getResponseCode();
+                System.out.println(rc + "");
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                System.out.println("RESPONSE ------> "+response.toString());
+
+                //JSONObject jsonObject = new JSONObject(response.toString());
+                JSONArray jsonArray = new JSONArray(response.toString());
+                JSONObject jsonObject;
+                String s;
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            return resp;
+
+
+        }
+
+
+        @Override
+        protected void onPostExecute(ArrayList<String> p) {
+            super.onPostExecute(p);
+            System.out.println("Response To Get --> "+p.toString());
+            if(p!=null){
+                //universities.clear();
+                //universities.addAll(p);
+            }
+            //mAdapter.notifyDataSetChanged();
+            //System.out.println(products.toString());
+        }
+
             //Url to Post
-            String url = "https://foreignest.herokuapp.com/tutorial/tutoresMobile"+params[0]+"/";
-            System.out.println("This is teh URL: "+url);
+
+            /*
+            String url = "https://foreignest.herokuapp.com/tutorial/tutoresMobile/";
+            System.out.println("This is the URL: "+url);
             HttpClient httpClient = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet(url);
+
+            StringBuffer bufferCadena = new StringBuffer("");
+
             try{
                 HttpResponse httpResponse = httpClient.execute(httpGet);
-                ObjectMapper objectMapper = new ObjectMapper();
-                Tutor[] myObject = objectMapper.readValue(httpResponse.getEntity().getContent(), Tutor[].class);
-                this.publishProgress(myObject[0]);
+                BufferedReader entrada = new BufferedReader(new InputStreamReader(
+                        httpResponse.getEntity().getContent()));
+
+                String separador = "";
+                String NL = System.getProperty("line.separator");
+
+
+                while ((separador = entrada.readLine()) != null) {
+                    bufferCadena.append(separador + NL);
+                }
+                entrada.close();
+
+                /*ObjectMapper objectMapper = new ObjectMapper();
+                Tutoria[] myObject = objectMapper.readValue(httpResponse.getEntity().getContent(), Tutoria[].class);
+                this.publishProgress(myObject);
+
+                JSONArray tutorias = new JSONArray(bufferCadena.toString());
+                JSONObject tutoria;
+
+                for(int index=0;index<tutorias.length();index++) {
+                    tutoria = (JSONObject) tutorias.get(index);
+                    bufferCadena.append(tutoria);
+                }
+
+                System.out.println("Response To Get --> "+ bufferCadena);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -348,11 +434,16 @@ public class NewTutorialActivity extends AppCompatActivity
         }
 
         @Override
-        protected void onProgressUpdate(Tutor... Tutor) {
-            for (int i = 0; i> Tutor.length; i++){
-                tutorArrayList.add(Tutor[i]);
+        protected void onProgressUpdate(String... array) {
+            System.out.println("Response To Get --> "+ array);
+
+            for (int i = 0; i> array.length; i++){
+
+                Tutor tutor = new Tutor();
+
+                tutorArrayList.add(tutor);
             }
 
-        }
+        }*/
     }
 }

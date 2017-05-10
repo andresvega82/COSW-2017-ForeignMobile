@@ -19,21 +19,21 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:weightSum="1">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/date_display"
+            <ListView
+                android:id="@+id/listTutorials3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="mis tutorias "
-                android:layout_weight="0.66"
-                android:textSize="20dp" />
+                android:drawSelectorOnTop="false" />
 
         </LinearLayout>
 
     </FrameLayout>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_weight="0.02" />
 
 
 </LinearLayout >
