@@ -203,6 +203,15 @@ public class NewTutorialActivity extends AppCompatActivity
 
     }
 
+    public void aceptarTutoria(View view){
+        //modificar base de datos
+        intent = new Intent(this, MyTutorialsActivity.class);
+        intent.putExtra("userId",userId);
+        intent.putExtra("view","1");
+        startActivity(intent);
+
+    }
+
     private void selectTutorial() {
 
         intent = new Intent(this, NewTutorialActivity.class);

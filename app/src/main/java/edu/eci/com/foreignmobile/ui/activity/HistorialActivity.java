@@ -94,7 +94,6 @@ public class HistorialActivity extends AppCompatActivity
         findViewById(R.id.activity_historial).setVisibility(View.VISIBLE);
 
         getTutorials();
-        getTutoresById();
 
 
     }
@@ -277,6 +276,8 @@ public class HistorialActivity extends AppCompatActivity
                         tutoriasArrayList.add(p.get(i));
                 }
             }
+
+            getTutoresById();
         }
     }
 

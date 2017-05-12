@@ -144,12 +144,13 @@ public class ProfileActivity extends AppCompatActivity
 
         @Override
         protected void onProgressUpdate(User... user) {
-            nombre.setText(user[0].getName()+" "+user[0].getLastName());
-            mail.setText(user[0].getEmail());
-            age.setText("Edad: "+user[0].getAge());
-            country.setText("País: "+user[0].getCountry());
-            phone.setText("Teléfono: "+user[0].getPhone());
-
+            if( user != null) {
+                nombre.setText(user[0].getName() + " " + user[0].getLastName());
+                mail.setText(user[0].getEmail());
+                age.setText("Edad: " + user[0].getAge());
+                country.setText("País: " + user[0].getCountry());
+                phone.setText("Teléfono: " + user[0].getPhone());
+            }
         }
     }
 }

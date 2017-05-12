@@ -71,7 +71,7 @@ public class AdapterItemHistorial extends BaseAdapter {
         date.setText("Fecha : "+dir.getDate().toString());
 
         TextView duration = (TextView) v.findViewById(R.id.duration);
-        duration.setText("Duración : "+dir.getDuration());
+        duration.setText("Duración : "+dir.getDuration()+" minutos");
 
 
         TextView language = (TextView) v.findViewById(R.id.language);

@@ -94,7 +94,6 @@ public class MyTutorialsActivity extends AppCompatActivity
 
 
         getTutorials();
-        getTutoresById();
 
     }
 
@@ -126,9 +125,11 @@ public class MyTutorialsActivity extends AppCompatActivity
 
                 intent = new Intent(MyTutorialsActivity.this, MyTutorials2Activity.class);
                 intent.putExtra("userID", userId);
-                intent.putExtra("view", "1");
-                intent.putExtra("userTutorial", "1");
-                intent.putExtra("userTeacher", "1");
+                intent.putExtra("language", tutorArrayList.get(position).getLanguage());
+                intent.putExtra("date", tutorArrayList.get(position).getDate().toString());
+                intent.putExtra("duration", tutorArrayList.get(position).getDuration().toString());
+                intent.putExtra("cost", tutorArrayList.get(position).getCost().toString());
+                intent.putExtra("name_teacher", tutorArrayList.get(position).getName_profesor().toString());
                 startActivity(intent);
             }
         });
@@ -278,6 +279,8 @@ public class MyTutorialsActivity extends AppCompatActivity
                         tutoriasArrayList.add(p.get(i));
                 }
             }
+
+            getTutoresById();
         }
     }
 
@@ -337,8 +340,6 @@ public class MyTutorialsActivity extends AppCompatActivity
 
                     TutoriaItem tutor = new TutoriaItem(tutoriasArrayList.get(i).getState(), user.getFullName(), tutoriasArrayList.get(i).getDate(), tutoriasArrayList.get(i).getDuration(), "Lenguaje" , tutoriasArrayList.get(i).getCost(), null);
                     resp.add(tutor);
-
-                    System.out.println("tutoria My Tutorials ------------->"+ tutor.getName_profesor());
                 }
 
             }catch (Exception e){
@@ -354,7 +355,7 @@ public class MyTutorialsActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(ArrayList<TutoriaItem> p) {
             super.onPostExecute(p);
-            System.out.println("Response To onPostExecute historial --> "+p.toString());
+            System.out.println("Response To onPostExecute mis tutorias --> "+p.toString());
             if(p!=null){
                 tutorArrayList = p;
             }
