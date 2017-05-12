@@ -335,7 +335,9 @@ public class HistorialActivity extends AppCompatActivity
 
                     usersArrayList.add(user);
 
-                    TutoriaItem tutor = new TutoriaItem(tutoriasArrayList.get(i).getState(), user.getFullName(), tutoriasArrayList.get(i).getDate(), tutoriasArrayList.get(i).getDuration(), "Lenguaje" , tutoriasArrayList.get(i).getCost(), null);
+
+                    Drawable photo = getResources().getDrawable( R.drawable.profesor1);
+                    TutoriaItem tutor = new TutoriaItem(tutoriasArrayList.get(i).getState(), user.getFullName(), tutoriasArrayList.get(i).getDate(), tutoriasArrayList.get(i).getDuration(), "Lenguaje" , tutoriasArrayList.get(i).getCost(), photo);
                     resp.add(tutor);
 
                     System.out.println("tutoria Historial ------------->"+ tutor.getName_profesor());
